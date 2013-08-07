@@ -1,8 +1,11 @@
 ifdef CLIPROOT
 include $(CLIPROOT)/include/Makefile.inc
-endif
 CLIP	= $(CLIPROOT)/bin/clip
 CLIPFLAGS = -l -b -a -O -n -I .. -I $(CLIPROOT)/include -I $(CLIPROOT)/include/netto
+else
+CLIP = clip
+CLIPFLAGS = -l -b -a -O -n -I ..
+endif
 CLIPLIBS  =
 
 LIBS  = -lclip-netto -lclip-nanfor
@@ -21,16 +24,20 @@ OBJS  =	getsys.o common.o \
 #LANG=ru_RU.KOI8-R
 #export LANG
 
-all: bdbf$(EXESUFF)
+all: bdbf$(EXESUFF) bdbf_d$(EXESUFF)
 
-bdbf$(EXESUFF):	bdbf.prg common.ch bdbfmsg.ch $(OBJS)
-	$(CLIP) $(CLIPFLAGS) -s -e -l bdbf.prg $(OBJS) $(LIBS)
+bdbf_d$(EXESUFF):	bdbf.prg bcommon.ch bdbfmsg.ch $(OBJS)
+	$(CLIP) $(CLIPFLAGS) -s -e -obdbf_d$(EXESUFF) -l bdbf.prg $(OBJS) $(LIBS)
+
+bdbf$(EXESUFF): bdbf.prg bcommon.ch bdbfmsg.ch $(OBJS)
+	$(CLIP) $(CLIPFLAGS) -s -e --full-static -obdbf$(EXESUFF) -l bdbf.prg $(OBJS) $(LIBS)
 
 clean:
 	rm -rf *.o *.ppo *.c *.s *.a *.so *.b *.BAK *.bak *.log
 	rm -rf bdbf *.exe *~ core* *core *.nm *.ex test
 
 install:
+	cp bdbf_d$(EXESUFF) $(DESTDIR)$(CLIPROOT)/bin/bdbf_d$(EXESUFF)
 	cp bdbf$(EXESUFF) $(DESTDIR)$(CLIPROOT)/bin/bdbf$(EXESUFF)
 	cp *.hlp $(DESTDIR)$(CLIPROOT)/bin/
 	tar cf - locale.po | (cd $(DESTDIR)$(CLIPROOT) && tar xf -)
@@ -41,5 +48,4 @@ install:
 
 .prg.po:
 	$(CLIP) $(CLIPFLAGS) -p $<
-
 
