@@ -1028,7 +1028,7 @@ BEGIN SEQUENCE
 		cExpr:=aEl[2]
 		cCond:=aEl[3]
 		lUniq:=aEl[4]
-		Add2Choice(aTag,cName,13,cExpr+IF(lUniq,' <Unique>',''),45,;
+		Add2Choice(aTag,cName,10,Left(cExpr+IF(lUniq,' <Unique>',''),100),100,;
 			   cCond,nL)
 		cTagFull+=(_CRLF+"INDEX ON "+TRIM(cExpr) + ";"+_CRLF+;
 			"      TAG "+cName)
