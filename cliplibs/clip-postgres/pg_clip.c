@@ -259,8 +259,8 @@ void pg_bindpars(PG_STMT* stmt,ClipVar* ap){
 			}
 		}
 		if(i == ap->a.count){
-			strcpy(t,"null");
-			t += 4;
+			memcpy(t,e,b-e);
+			t += b-e;
 		} else {
 			strcpy(t,vp->s.str.buf);
 			t += strlen(vp->s.str.buf);
