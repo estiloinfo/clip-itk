@@ -1,4 +1,4 @@
-CFLAGS += -I.. -I../include
+CFLAGS += -I.. -I../include -fPIC
 LIB = librdd.a
 OBJS = rddclip.o rdd.o dbf.o ntx.o cdx.o dbt.o fpt.o rushmore.o btree.o six.o hiper.o
 
