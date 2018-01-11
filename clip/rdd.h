@@ -953,14 +953,14 @@ void loc_read(DbfLocale* loc,unsigned char* buf,int len);
 void loc_write(DbfLocale* loc,unsigned char* buf,int len);
 int loc_cmp(DbfLocale* loc,unsigned char* s1,unsigned char* s2,int len);
 
-inline unsigned int _rdd_uint(unsigned char s[]);
-inline unsigned short int _rdd_ushort(unsigned char s[]);
-inline void _rdd_put_uint(unsigned char s[],unsigned int v);
-inline void _rdd_put_ushort(unsigned char s[],unsigned short int v);
-inline unsigned int _rdd_backuint(unsigned char s[]);
-inline unsigned short int _rdd_backushort(unsigned char s[]);
-inline void _rdd_put_backuint(unsigned char s[],unsigned int v);
-inline void _rdd_put_backushort(unsigned char s[],unsigned short int v);
+unsigned int _rdd_uint(unsigned char s[]);
+unsigned short int _rdd_ushort(unsigned char s[]);
+void _rdd_put_uint(unsigned char s[],unsigned int v);
+void _rdd_put_ushort(unsigned char s[],unsigned short int v);
+unsigned int _rdd_backuint(unsigned char s[]);
+unsigned short int _rdd_backushort(unsigned char s[]);
+void _rdd_put_backuint(unsigned char s[],unsigned int v);
+void _rdd_put_backushort(unsigned char s[],unsigned short int v);
 
 int rdd_open(ClipMachine* cm,char* path,int readonly,int shared,int* fd,const char* __PROC__);
 
