@@ -16,6 +16,7 @@ RTARGET=libclip-odbc$(DLLREALSUFF)
 TARGET1=libclip-oob$(DLLSUFF)
 RTARGET1=libclip-oob$(DLLREALSUFF)
 OBJS=odbc_clip.o odbc.o
+CFLAGS=-fPIC $(C_FLAGS)
 
 all:  $(TARGET) $(TARGET1) $(ATARGET)
 
@@ -29,7 +30,7 @@ $(TARGET1): $(OBJS)
 	[ "$(LIBOOB)" = '' ] || $(CLIPROOT)/bin/clip_makeslib $(TARGET1) $(OBJS) $(LIBOOB) $(C_LIBS)
 
 odbc_clip.o: odbc_clip.c odbc.ch
-	$(CC) $(C_FLAGS) -c odbc_clip.c
+	$(CC) $(CFLAGS) -c odbc_clip.c
 
 odbc.o: odbc.prg odbc.ch
 	$(CLIPROOT)/bin/clip odbc.prg
