@@ -90,7 +90,7 @@ static:		$(LIBNAME)
 
 
 $(NAME):	$(OBJS)
-		gcc -shared -W1,soname,$(SONAME) -o $(NAME) $(OBJS)
+		gcc -shared -Wl,-soname=$(SONAME) -o $(NAME) $(OBJS)
 
 $(LIBNAME):	$(OBJS)
 		$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
