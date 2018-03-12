@@ -699,6 +699,7 @@ STATIC FUNCTION rowsetRefreshCurrent(self,data)
 		ENDIF
 		SQLRefresh(self:rowset,stmt,pars)
 		SQLFreeSTMT(stmt)
+		SQLSetHot(self:rowset,.F.)
 	ENDIF
 RETURN
 
