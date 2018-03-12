@@ -391,8 +391,8 @@ typedef struct Parser
 #define SHORTINCR(offs) ((offs)+=sizeof(short));
 #endif
 
-#define YYPARSE_PARAM parser
-#define YYLEX_PARAM parser
+//#define YYPARSE_PARAM parser
+//#define YYLEX_PARAM parser
 #define	YYINITDEPTH 64
 #define PARSER ((Parser*)parser)
 #undef __GNUC__
@@ -400,7 +400,7 @@ typedef struct Parser
 
 int rtlex();
 void rt_error(Parser *parser, char *fmt,...);
-#define rterror(msg) rt_error(PARSER, "%s", msg);
+#define rterror(msg,...) rt_error( PARSER, "%s", msg);
 static int installName(Parser *parser, long hash, int memvar, int lval, long area, int fld);
 static void gen_op(Parser *parser, int op);
 static void add_deep(Function *fp, int no);
@@ -435,7 +435,9 @@ static void add_deep(Function *fp, int no);
 	int i;
 }
 
-%pure_parser
+%pure-parser
+%parse-param {void *parser}
+%lex-param {void *parser}
 
 %token <string> STRING
 %token <Double> NUMBER
