@@ -1208,7 +1208,7 @@ check_names(Coll * ex, Coll * nm)
 
 		s = (char *) ex->items[i];
 		if (!search_Coll(nm, s, &no))
-			yyerror("possible not defined function %s", s);
+			yywarning("possible not defined function %s", s);
 	}
 }
 
