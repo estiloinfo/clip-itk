@@ -260,10 +260,10 @@ cleanc:
 		bin *.exe locale.pot license.h clipcfg.h clipcfg.sh \
 		clip_cp clip_makelib clip_makeslib \
 		calchash genlist hashextract clip_hashextract \
-		clip_msgfmt clip_msgmerge
-
-#		 clic.tab.c clic.tab.h  lex.cl.c  lex.hash.c lex.yy.c
-#		 plural.tab.c rt.tab.c	rt.tab.h \
+		clip_msgfmt clip_msgmerge \
+	 	plural.tab.c rt.tab.c	rt.tab.h \
+	        clic.tab.c clic.tab.h 
+#	        \ lex.cl.c  lex.hash.c lex.yy.c
 
 
 distclean: clean
