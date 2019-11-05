@@ -128,7 +128,7 @@ do_cipher(ClipMachine *mp, int operation)
 	char *cipher_name, *digest_name;
 	char *key_str, *data, *iv_str, *data_ptr;
 	int key_len=0, data_len=0, iv_len=0;
-	EVP_CIPHER_CTX ectx;
+	EVP_CIPHER_CTX *ectx;
 	unsigned char iv[EVP_MAX_IV_LENGTH];
 	unsigned char key[EVP_MAX_KEY_LENGTH];
 	char ebuf[BLOCK_SIZE + 8];
@@ -136,6 +136,8 @@ do_cipher(ClipMachine *mp, int operation)
 	char *obuf = 0;
 	unsigned int olen = 0;
 	int l;
+
+	ectx = EVP_CIPHER_CTX_new();
 
 	crypto_init();
 
@@ -179,7 +181,7 @@ do_cipher(ClipMachine *mp, int operation)
 
 
 	EVP_BytesToKey(cipher, (EVP_MD*)digest, (const unsigned char *)"clip", (const unsigned char *)key_str, key_len, 1, key, iv);
-	EVP_CipherInit(&ectx, cipher, key, iv, operation);
+	EVP_CipherInit_ex(ectx, cipher, NULL, key, iv, operation);
 
 	for(l=0, data_ptr=data; l<data_len; )
 	{
@@ -189,7 +191,7 @@ do_cipher(ClipMachine *mp, int operation)
 			ll = BLOCK_SIZE;
 
 		ebuflen = sizeof(ebuf);
-		EVP_CipherUpdate(&ectx, (unsigned char *)ebuf, (int *)&ebuflen, (unsigned char *)data_ptr, ll);
+		EVP_CipherUpdate(ectx, (unsigned char *)ebuf, (int *)&ebuflen, (unsigned char *)data_ptr, ll);
 
 		obuf = (char*) realloc( obuf, olen + ebuflen);
 		memcpy(obuf + olen, ebuf, ebuflen);
@@ -199,7 +201,7 @@ do_cipher(ClipMachine *mp, int operation)
 		data_ptr += ll;
 	}
 
-	EVP_CipherFinal(&ectx, (unsigned char *)ebuf, (int *)&ebuflen);
+	EVP_CipherFinal(ectx, (unsigned char *)ebuf, (int *)&ebuflen);
 
 	obuf = (char*) realloc( obuf, olen + ebuflen + 1);
 	memcpy(obuf + olen, ebuf, ebuflen);
