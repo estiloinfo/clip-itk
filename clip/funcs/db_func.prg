@@ -605,11 +605,14 @@ function __dbCopyDelim(file,fdelim,rfields, ufor, uwhile, unext, rec, rest)
 						if !empty(set("DBF_CHARSET"))
 							x1=translate_charset(host_charset(),set("DBF_CHARSET"),x1)
 						endif
+						if fdelim=chr(34)
+							x1=StrTran( x1, chr(34), "'" )
+						endif
 						wrec+=fdelim+alltrim(x1)+fdelim+rdelim
 					case valtype(x1)=="N"
 						wrec+=alltrim(str(x1))+rdelim
 					case valtype(x1)=="D"
-						wrec+=dtos(x1)+rdelim
+						wrec+=alltrim(dtos(x1))+rdelim
 					case valtype(x1)=="L"
 						wrec+=iif(x1,"T","F")+rdelim
 				endcase
