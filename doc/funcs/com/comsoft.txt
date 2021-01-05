@@ -7,14 +7,15 @@ $SUMMARY$
 $LANG_RU$
 	Запрашивает статус или устанавливает программное управление потоком (XON/XOFF).
 $SYNTAX$
-	COM_SOFT(<nComPort>,[<lNewHandshake>],[<cXONchar>],[<cXOFFchar>]) -->  lOldHandshake
+	COM_SOFT(<nHandle>,[<lNewHandshake>],[<cXONchar>],[<cXOFFchar>]) -->  lOldHandshake
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N) for which the software handshake is set.
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<lNewHandshake> - Designates whether the handshake is on (.T.) or off (.F.). If this parameter is omitted, the function returns the current setting.
 	<cXONchar> - Designates any character you choose as an XON character. The default character is ASCII 19 - Ctrl-S.
 	<cXOFFchar> - Designates any character you choose as an XOFF character. The default value is ASCII 17 - Ctrl-Q.
 $LANG_RU$
-	<nComPort> - Определяет номер порта.
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 	<lNewHandshake> - Включает (.T.) или выключает (.F.) программное управление потоком. Если этот параметр опущен, функция возвращает текущие установки.
 	<cXONchar> - Определяет символ, используемый как XON. Значением по умолчанию является ASCII 19 - Ctrl-S.
 	<cXOFFchar> - Определяет значение символа, используемого как XOFF. Значением по умолчанию является ASCII 17 - Ctrl-Q.
@@ -46,8 +47,7 @@ $LANG_RU$
 	Когда вы передаете бинарные данные, программное управление
 	потоком должно быть отключено.
 $EXAMPLES$
-	COM_OPEN(1)   		// Open port
-	COM_SOFT(1, .T.)        // Software handshake COM1
+	COM_SOFT(1, .T.)        // Software handshake on handle port
 $PECULIARITIES$
 $LANG_RU$
 $PLATFORMS$

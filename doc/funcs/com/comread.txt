@@ -7,12 +7,13 @@ $SUMMARY$
 $LANG_RU$
 	Читает символы из буфера приема.
 $SYNTAX$
-	COM_READ(<nComPort>,[<nLength>]) --> cData
+	COM_READ(<nHandle>,[<nLength>]) --> cData
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N) that is read.
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<nLength> - Designates the number of the characters in the buffer that are read. The default value reads all characters.
 $LANG_RU$
-	<nComPort> - Определяет порт для чтения.
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 	<nLength> - Определяет число символов для чтения. По умолчанию - все символы.
 $RETURNS$
 	The returned string contains the corresponding characters from

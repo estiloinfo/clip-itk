@@ -7,11 +7,12 @@ $SUMMARY$
 $LANG_RU$
 	Определяет число доступных символов в буфере приема.
 $SYNTAX$
-	COM_COUNT(<nComPort>) --> nTotalCharacters
+	COM_COUNT(<nHandle>) --> nTotalCharacters
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N) for which the number of characters in the input buffer is determined.
+	<nHandle> is the file handle obtained from COM_OPEN().
 $LANG_RU$
-	<nComPort> - Определяет номер порта.
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 $RETURNS$
 	Return the number of characters in the selected buffer.
 $LANG_RU$
@@ -30,7 +31,7 @@ $LANG_RU$
 
 	Если функция вызывается для закрытого порта, возвращается -1.
 $EXAMPLES$
-	nCharacter  :=  COM_COUNT(1)   // Number of characters-port 1
+	nCharacter  :=  COM_COUNT(1)   // Number of handle port
 	IF nCharacter > 0
 	     COM_READ(1, 1)              // Read 1 character
 	ENDIF

@@ -1,25 +1,33 @@
-port:=1
+port:="/dev/ttyUSB0" 
 
-? 'found', COM_NUM(), 'ports'
+fd:=COM_OPEN(port)
 
-IF ! COM_OPEN(port)
+? fd
+
+IF fd = -1
      ? "cannot opened port !", FERRORSTR()
      break
 ENDIF
 
-? 'init', COM_INIT(port, 9600, 'N', 8, 1)
+? "**********************" 
 
-? COM_SOFT(port, .f.)
-? COM_HARD(port, .f.)
+? 'init', COM_INIT(fd, 9600, 'N', 8, 1)
 
-? COM_TIMEOUT(port, 20)
+? "**********************" 
 
-msg:='Hello, World!'
-? 'send', COM_SEND(port, msg)
+sleep( 3 )
 
-? 'count', COM_COUNT(port)
-? 'read', COM_READ(port, 10)
+msg:='b'
+? 'send', COM_SEND(fd, msg)
+? 'read', COM_READ(fd)
 
-? COM_CLOSE(port)
+sleep(3)
+
+? 'send', COM_SEND(fd, "a")
+? 'read', COM_READ(fd)
+? 'send', COM_SEND(fd, "v")
+? 'read', COM_READ(fd)
+
+? COM_CLOSE(fd)
 
 ?

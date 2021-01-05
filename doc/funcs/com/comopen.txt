@@ -7,39 +7,39 @@ $SUMMARY$
 $LANG_RU$
 	Открывает порт и инициализирует буффер.
 $SYNTAX$
-	COM_OPEN(<nComPort>,<notused>,<notused>,<notused>,
-		[<lRTSCTS>],[<lXONXOFF>],[<lDebug>]) --> lStatus
+	COM_OPEN(<cComPort>,<notused>,<notused>,<notused>,
+		[<lRTSCTS>],[<lXONXOFF>],[<lDebug>]) --> nHandle
 $ARGUMENTS$
-	<nComPort> - Designates the number of the port (1 to N).
+	<cComPort> - Is the name of the port to open.
 	<lRTSCRS>  - Enable or disable use of hardware flow control.
 	<lXONXOFF> - Enable or disable use of software flow control.
 	<lDebug> - True value enable com port debug output
 $LANG_RU$
-	<nComPort> - Номер порта (от 1 до N).
+	<cComPort> - НИмя порта, который нужно открыть.
 	<lRTSCRS> - Разрешает или запрещает использование аппаратного управления потоком символов.
 	<lXONXOFF> - Разрешает или запрещает использование программного управления потоком символов.
 	<lDebug> - Включает отладочный вывод библиотеки.
 $RETURNS$
-	Returns .T. when the port has been successfully opened and you can select the buffer.
+	Returns the file handle of the opened port in the range of zero
+	to 65,535.  If an error occurs, COM_OPEN returns -1.
 $LANG_RU$
-	Возвращает .T. если порт был успешно открыт.
+	Возвращает дескриптор файла открытого порта в диапазоне от нуля
+	до 65 535. В случае ошибки COM_OPEN возвращает -1.
 $DESCRIPTION$
 	This function allows you to open a serial interface port.
 $LANG_RU$
 	Эта функция открывает порт последовательного интерфейса.
 $EXAMPLES$
-	IF COM_NUM() > 0
-	    ComOk  :=  COM_OPEN(1)     // Open COM1
+	    ComOk  :=  COM_OPEN("/dev/ttyS0")     
 
-	    IF .NOT. ComOk
+	    IF ComOk = -1
 		 ? "Port cannot be opened  !"
 	    ENDIF
-	ENDIF
 $PECULIARITIES$
 $LANG_RU$
 $PLATFORMS$
    No dependies of platform.
-   $LANG_RU$
+$LANG_RU$
    Не зависит от платформ
 $SEEALSO$
 	COM_FLUSH(),COM_INIT(),COM_READ(),COM_SEND(),COM_SFLUSH()

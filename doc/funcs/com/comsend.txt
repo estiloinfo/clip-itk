@@ -7,15 +7,16 @@ $SUMMARY$
 $LANG_RU$
 	Передача данных.
 $SYNTAX$
-	COM_SEND(<nComPort>,<cString>) --> nLength
+	COM_SEND(<nHandle>,<cString>) --> nLength
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N) from which transmission occurs.
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<cString> - Designates the string that is transmitted by the
 	selected port. If you only need to transmit a single character, then the
 	second parameter can also be numeric and thereby pass the ASCII
 	character code directly.
 $LANG_RU$
-	<nComPort> - Определяет порт передачи.
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 	<cString> - Определяет строку для передачи через порт. Если
 	необходимо передать один символ, второй параметр может быть числовым и
 	задавать ASCII код символа.
@@ -32,15 +33,17 @@ $DESCRIPTION$
 $LANG_RU$
 	Передает один или более символов через выбранный порт.
 $EXAMPLES$
-	COM_OPEN(1)    //
-	COM_HARD(.T.)  // Hardware handshake
-	ACCEPT "Please input name " TO cInput
-	nRest := COM_SEND(1, cInput)         // 1st attempt to transmit
+	nHandle := COM_OPEN("/dev/ttyS0")    //
+	IF nHandle > 0
+        COM_HARD(nHandle, .T.)  // Hardware handshake
+        ACCEPT "Please input name " TO cInput
+        nRest := COM_SEND(nHandle, cInput)         // 1st attempt to transmit
 
-	DO WHILE nRest > 0
-	      cInput := RIGHT(cInput, nRest)    // Characters not yet sent
-	      nRest := COM_SEND(1, cInput)
-	ENDDO
+        DO WHILE nRest > 0
+            cInput := RIGHT(cInput, nRest)    // Characters not yet sent
+            nRest := COM_SEND(nHandle, cInput)
+        ENDDO
+    ENDIF
 $PECULIARITIES$
 $LANG_RU$
 $PLATFORMS$

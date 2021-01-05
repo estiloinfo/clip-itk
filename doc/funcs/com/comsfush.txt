@@ -7,11 +7,12 @@ $SUMMARY$
 $LANG_RU$
 	Очищает буфер передачи.
 $SYNTAX$
-	COM_SFLUSH(<nComPort>) --> lDeleted
+	COM_SFLUSH(<nHandle>) --> lDeleted
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N).
+	<nHandle> is the file handle obtained from COM_OPEN().
 $LANG_RU$
-	<nComPort> - Определяет номер порта.
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 $RETURNS$
 	On success returns .T..
 $LANG_RU$

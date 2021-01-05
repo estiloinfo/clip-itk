@@ -111,15 +111,15 @@ clip_COM_OPEN(ClipMachine * mp)
 	{
 		err = _clip_fetch_item(mp, HASH_ferror);
 		*err = errno;
-		_clip_retl(mp, 0);
+		_clip_retni(mp, -1);
 		return 0;
 	}
 
 	k = _clip_store_c_item(mp, gz, _C_ITEM_TYPE_COMPORT, destroy_com_port);
 
-	keys[no] = k;
+	keys[k] = k;
 
-	_clip_retl(mp, 1);
+	_clip_retni(mp, k);
 
 	return 0;
 }
@@ -249,6 +249,7 @@ clip_COM_INIT(ClipMachine * mp)
 
 	if (fd < 1 || fd > 32)
 		return EG_ARG;
+
 	fd = keys[fd];
 
 	gz = (v24_port_t *) _clip_fetch_c_item(mp, fd, _C_ITEM_TYPE_COMPORT);

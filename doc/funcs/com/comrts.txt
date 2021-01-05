@@ -7,15 +7,16 @@ $SUMMARY$
 $LANG_RU$
 	Запрашивает/устанавливает сигнал RTS.
 $SYNTAX$
-	COM_RTS(<nComPort>,[<lNewRTSStatus>]) --> lOldRTSStatus
+	COM_RTS(<nHandle>,[<lNewRTSStatus>]) --> lOldRTSStatus
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N) for which the number of characters in the input buffer is determined.
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<lNewRTSStatus> - Designates the status of RTS. .T. designates
 	that the RTS signal is active, and .F. designates that the signal is
 	inactive. If the parameter is not specified, does not affect the RTS
 	exit signal.
 $LANG_RU$
-	<nComPort> - Определяет номер порта.
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 	<lNewRTSStatus> - Определяет статус RTS: .T. для активации
 	сигнала, .F. для сброса сигнала. Если параметр не задан, статус RTS не
 	изменяется.
@@ -44,9 +45,9 @@ $LANG_RU$
 	Функция COM_CLOSE() сбрасывает сигнал RTS. Однако, COM_OPEN не
 	устанавливает RTS автоматически.
 $EXAMPLES$
-	lComOk  :=  COM_OPEN(1)	       // Open COM1
-	IF lComOk
-		COM_RTS(1, .T.)       // Activate RTS Port 1
+	nHandle :=  COM_OPEN("/dev/ttyS0")	       // Open ttyS0
+	IF nHandle > 0
+		COM_RTS(nHandle, .T.)       // Activate RTS Port
 		* ...
 	ENDIF
 $PECULIARITIES$

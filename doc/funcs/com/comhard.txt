@@ -7,25 +7,26 @@ $SUMMARY$
 $LANG_RU$
 	Включает/выключает аппаратное управление потоком символов (CTS/RTS).
 $SYNTAX$
-	COM_HARD(<nComPort>,<lNewHandshake>,[<lDTR/DSR>]) --> lOldHandshake
+	COM_HARD(<nHandle>,<lNewHandshake>,[<lDTR/DSR>]) --> lOldHandshake
 $ARGUMENTS$
-	<nComPort> - Designates the number of the port (1 to N).
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<lNewHandshake> - Designates whether the handshake is on (.T.) or off (.F.).
 	<lDTR/DSR> - Designates whether the function uses the DTR/DSR
 	handshake or the RTS/CTS handshake. When passed as .T., the function
 	uses the DTR/DSR handshake instead of the RTS/CTS handshake.
 $LANG_RU$
-	<nComPort> - Номер порта (от 1 до N).
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+     помощью функций COM_OPEN().
 	<lNewHandshake> - Определяет включение (.T.) или выключение (.F.) аппаратного управления потоком.
 	<lDTR/DSR> - Определяет, должно ли использоваться управление при
 	помощи сигналов DTS/DSR (.T.) или RTS/CTS (.F.).
 $RETURNS$
-	When called only with <nComPort>, the COM_HARD() returns .T. if
+	When called only with <nHandle>, the COM_HARD() returns .T. if
 	the hardware handshake is on and .F. if the hardware handshake is off.
 	When <lNewHandshake> is passed, the function returns the status prior to
 	the new setting.
 $LANG_RU$
-	Когда функция вызывается только с параметром <nComPort>,
+	Когда функция вызывается только с параметром <nHandle>,
 	возвращается .T. если аппаратное управление потоком включено, и .F. если
 	выключено. Когда передается параметр <lNewHandshake>, функция возвращает
 	предыдущий статус.
@@ -62,8 +63,10 @@ $LANG_RU$
 	должен устанавливаться вручную с использованием функций COM_RTS() или
 	COM_MCR().
 $EXAMPLES$
-	COM_OPEN(2)      // Open COM2
-	COM_HARD(2, .T.) // RTS/CTS Hardware handshake
+	nHandle := COM_OPEN("/dev/ttyUSB0")      // Open port 
+	IF nHandle > 0
+		COM_HARD(nHandle, .T.) // RTS/CTS Hardware handshake
+	ENDIF
 $PECULIARITIES$
 $LANG_RU$
 $PLATFORMS$

@@ -7,12 +7,13 @@ $SUMMARY$
 $LANG_RU$
 	Установливает таймаут операций в единицах 1/10 секунды.
 $SYNTAX$
-	COM_TIMEOUT(<nComPort>[,<nTimeout>]) --> nOldTimeout
+	COM_TIMEOUT(<nHandle>[,<nTimeout>]) --> nOldTimeout
 $ARGUMENTS$
-	<nComPort> - Designates the number of the port (1 to N).
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<nTimeout> - Designates operation timeout in tenth (1/10) seconds.
 $LANG_RU$
-	<nComPort> - Номер порта (от 1 до N).
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 	<nTimeout> - Определяет таймаут операций в единицах 1/10 секунды.
 $RETURNS$
 	Return previous value of operation timeout.
@@ -32,8 +33,10 @@ $LANG_RU$
 	Длительность таймаута определяется параметром TenthOfSeconds.
 	Значение задается в десятых долях секунды.
 $EXAMPLES$
-	COM_OPEN(2)
-	COM_TIMEOUT(6000)
+	nHandle := COM_OPEN("/dev/ttyS0")
+	IF nHandle > 0
+        COM_TIMEOUT(nHandle, 6000)
+    ENDIF
 $PECULIARITIES$
 $LANG_RU$
 $PLATFORMS$

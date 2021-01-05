@@ -7,16 +7,17 @@ $SUMMARY$
 $LANG_RU$
 	Инициализирует параметры порта.
 $SYNTAX$
-	COM_INIT(<nComPort>,[<nBaudRate>],[<cParity>],
+	COM_INIT(<nHandle>,[<nBaudRate>],[<cParity>],
 		 [<nDataLength>],[<nStopBits>]) --> lInitialized
 $ARGUMENTS$
-	<nComPort> - Designates the port (1 to N) that is initialized.
+	<nHandle> is the file handle obtained from COM_OPEN().
 	<nBaudRate> - Designates the selected baud rate for the port. Settings of 300, 600, 1200, 2400, 4800, 9600 and 19200 baud are possible. The default value is 300 baud.
 	<cParity> - Designates parity in the following form: (E)ven, (O)dd, (M)ark, (S)pace, or (N)one. The default value is (N)one.
 	<nDataLength> - Designates the data length; seven or eight bits are possible. The default value is eight bits.
 	<nStopBits> - Designates the number of stop bits, one or two. The default value is one stop bit.
 $LANG_RU$
-	<nComPort> - Определяет номер порта для инициализации
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функций COM_OPEN().
 	<nBaudRate> - Определяет битовую скорость для порта. Возможные значения 300, 600, 1200, 2400, 4800, 9600 19200 38400 бод Значение по умолчанию 9600
 	<cParity> - Задает четность в виде: (E)ven, (O)dd, (M)ark, (S)pace, or (N)one. Значение по умолчанию (N)one.
 	<nDataLength> - Определяет число бит данных; возможные значения 7 или 8 бит. Значение по умолчанию - 8.
