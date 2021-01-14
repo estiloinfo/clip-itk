@@ -1,0 +1,24 @@
+$FUNCNAME$
+	BASE64DECODE()
+$CATEGORY$
+  Crypto
+$SUMMARY$
+	Decode Base64 string into clear text
+$SYNTAX$
+	BASE64DECODE(<cDataEncode>) --> cData
+$ARGUMENTS$
+	<cDataEncode> - Encode Base64 string for decode
+$RETURNS$
+	Decode string
+$DESCRIPTION$
+	Base64 characters only use the same 64 characters that are present 
+	in most character sets.
+$EXAMPLES$
+	BASE64DECODE( "SGVsbG8gV29ybGQ=" )		// Result: Hello World
+$PECULIARITIES$
+$PLATFORMS$
+$SEEALSO$
+   BASE64ENCODE()
+$AUTHOR$
+Ricardo Brisighelli
+$END$
