@@ -51,6 +51,7 @@ case "$uname" in
 		DLLREALSUFF='.dll'
 esac
 
+echo "**************************************"
 printf "configure: creating clip-gtkcfg.h .."
 
 exec 3>clip-gtkcfg.h
@@ -86,10 +87,7 @@ gtkprefix=`gtk-config --prefix 2>/dev/null`
 
 if [ $? -ne 0 ]
 then
-	echo
-	echo "*****************************************************************"
-	echo "*** The gtk-config script installed by GTK could not be found ***"
-	echo "*****************************************************************"
+	echo "Warning: The gtk-config script installed by GTK could not be found"
 	USE_GTK=no
 else
 ##	LIBS='-lgtk -lgdk'
@@ -126,7 +124,8 @@ echo ". done."
 if [ "$USE_GTK" = no ]
 then
 	echo "gtk not detected"
-	exit 0
+	echo ""
+	exit 1
 fi
 
 
