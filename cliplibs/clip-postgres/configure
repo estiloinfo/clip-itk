@@ -1,31 +1,35 @@
 #!/bin/sh
 
 if [ -z "$PGINCDIR" ]; then
-	for x in /usr/include/pgsql \
-		/usr/include/pgsql/server \
-		/usr/include/postgresql \
-		/opt/postgresql/include \
-		/usr/local/pgsql/include
+	PGINCDIR=$(find /usr -iname libpq-fe.h 2>/dev/null)
+fi
+if [ -z "$PGINCDIR" ]; then
+	PGINCDIR=$(find /opt/postgresql -iname libpq-fe.h 2>/dev/null)
+fi
+if [ ! -z "$PGINCDIR" ]; then
+	PGINCDIR=$(dirname $PGINCDIR)
+fi
 
-	do
-		if [ -f "$x/libpq-fe.h" ]; then
-			PGINCDIR=$x
-			break
-		fi
-	done
+if [ -z "$PGLIBDIR" ]; then
+	PGLIBDIR=$(find /usr -iname libpq.so 2>/dev/null)
 fi
 if [ -z "$PGLIBDIR" ]; then
-	for x in /usr/local/lib \
-		/usr/local/pgsql/lib \
-		/opt/postgresql/lib
-	do
-		if [ -f "$x/libpq.so" ]; then
-			PGLIBDIR=$x
-			break
-		fi
-	done
+	PGLIBDIR=$(find /opt/postgresql -iname libpq.so 2>/dev/null)
+fi
+if [ ! -z "$PGLIBDIR" ]; then
+	PGLIBDIR=$(dirname $PGLIBDIR)
+fi
+
+if [ -z "$PGINCDIR" -o -z "$PGLIBDIR" ]; then
+        echo "**************************************"
+        echo 'Warning: postgresql-server-dev-all package not installed'
+        echo 'Warning: libclip-postgres make skip'
+        echo ""
+	exit 1
 fi
 
 sed -e "s,@PGINCDIR@,${PGINCDIR:-/usr/include},g" \
 	-e "s,@PGLIBDIR@,${PGLIBDIR:-/usr/lib},g" \
 	Makefile.in > Makefile
+
+
