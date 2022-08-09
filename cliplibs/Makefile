@@ -16,9 +16,12 @@ dirs = clip-gzip clip-bzip2 clip-crypto clip-gd clip-fcgi \
 all local user system install lib:
 	for dir in $(dirs); \
 	do \
-		(cd $$dir ;\
-		[ -x ./configure ] && ./configure ;\
-		$(MAKE) $@ );\
+		(cd $$dir;\
+		if [ -f configure ]; then\
+			./configure && [ $$? = 0 ] && $(MAKE) $@; \
+		else \
+			$(MAKE) $@; \
+		fi); \
 	done
 
 clean:
