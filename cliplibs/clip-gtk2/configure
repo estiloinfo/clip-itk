@@ -84,7 +84,7 @@ case "$uname" in
 		DLLREALSUFF='.dll'
 esac
 
-
+echo   "***************************************" 
 printf "configure: creating clip-gtkcfg2.h .."
 
 PKGCONFIG=""
@@ -100,23 +100,23 @@ else
 fi
 if [ -z $PKGCONFIG ]; then
     echo "ERROR!!!"
-    echo "*****************************************************************"
-    echo "*** The pkg-config not installed                              ***"
-    echo "*****************************************************************"
-    USE_GTK=no
+    echo "Warning: The pkg-config not installed"
     echo "System MUST have installed pkg-config first!"
-    exit
+    echo "Warning: libclip-gtk2 make skip"
+    echo ""
+    USE_GTK=no
+    exit 1
 fi
 
 gtkprefix=`$PKGCONFIG gtk+-2.0 --libs 2>/dev/null`
 if [ $? -ne 0 ]; then
     echo "ERROR!!!"
-    echo "*****************************************************************"
-    echo "*** The gtk+-2.0 not installed                                ***"
-    echo "*****************************************************************"
-    USE_GTK=no
+    echo "Warning: The gtk+-2.0 not installed"
     echo "gtk2 not detected"
-    exit
+    echo "Warning: libclip-gtk2 make skip"
+    echo ""
+    USE_GTK=no
+    exit 1
 fi
 
 LIBS=`$PKGCONFIG gtk+-2.0 --libs`
