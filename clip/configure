@@ -183,7 +183,7 @@ esac
 #C_FLAGS="-Wall -Wextra -I. $DEBUGFLAGS $OPTFLAGS $MDBG"
 C_FLAGS="-Wall -Wextra -I$CLIPROOT/include $DEBUGFLAGS $OPTFLAGS"
 C_LIBS="-L$CLIPROOT/lib -lclip"
-ADD_CFLAGS="-fPIC"
+ADD_CFLAGS="-fPIC -fcommon"
 
 uname=`uname -s`
 uver=`uname -r`
@@ -239,6 +239,7 @@ case "$uname" in
 		;;
 esac
 fi
+
 
 oneof()
 {
@@ -347,32 +348,36 @@ then
 	. ./clipcfg.sh
 fi
 
-
-msgfmt -V >/dev/null 2>&1
-if [ $? != 0 ]
-then
-	echo 'Warning: GETTEXT package does not installed'
-	echo 'Warning: clip_msgfmt and clip_msgmerge will not work'
-	NO_GETTEXT=yes
-fi
-
 flex -V >/dev/null 2>&1
 if [ $? != 0 ]
 then
-	echo 'Warning: FLEX package does not installed'
+	echo '*******************************************'
+	echo 'Warning: flex package does not installed'
 	echo 'Warning: clip compilation may have a problems'
-	#exit 1
+	exit 1
 fi
 
 bison -V >/dev/null 2>&1
 if [ $? != 0 ]
 then
-	echo 'Warning: BISON package does not installed'
+	echo '*******************************************'
+	echo 'Warning: bison package does not installed'
 	echo 'Warning: clip compilation may have a problems'
-	#exit 1
+	exit 1
 fi
 
-if [ "$USE_TASKS" = yes -a ! -f task/task.o ]
+find /usr/include -iname term.h | grep term.h
+if [ $? != 0 ]
+then
+	echo '*******************************************'
+	echo 'Warning: libncurses-dev package does not installed'
+	echo 'Warning: system do not have installed NCURSES development'
+	echo 'Warning: clip compilation may have a problems'
+	exit 1 
+fi
+
+find /usr/include -iname pth.h | grep pth.h
+if [ $? = 0 ]
 then
 	cd task
 	./configure
@@ -381,16 +386,38 @@ then
 	then
 		USE_TASKS=yes
 	else
-		USE_TASKS=no
-		echo 'Warning: task not available: unknown system'
+		echo '*******************************************'
+		echo 'Error: Task dont work'
+		exit 1
+
 	fi
 	cd ..
+else
+	USE_TASKS=no
+	echo '*******************************************'
+	echo 'Warning: libpth-dev package does not installed'
+	echo 'Warning: system do not have installed PTH development'
+	echo 'Warning: cliplib compilation may have a problems'
+	exit 1
+	
+fi
+
+msgfmt -V >/dev/null 2>&1
+if [ $? != 0 ]
+then
+	echo '*******************************************'
+	echo 'Warning: gettext package does not installed'
+	echo 'Warning: clip_msgfmt and clip_msgmerge will not work'
+	echo ''
+	NO_GETTEXT=yes
+	sleep 5
 fi
 
 if [ "$USE_TASKS" = yes -a -f task/USE_PTH ]
 then
     ADDLIBS="$ADDLIBS -lpth"
 fi
+
 
 cd xclip
 	if xmkmf >/dev/null 2>&1
@@ -406,6 +433,7 @@ cd ..
 printf "configure: Makefile creating.."
 
 exec 3>Makefile.incl
+
 
 echo "#	Created automatically by 'configure'" >&3
 echo '#' >&3
@@ -446,6 +474,7 @@ echo "OS_$osname=yes" >&3
 echo "C_FLAGS='$C_FLAGS'" >&3
 echo "C_LIBS='$C_LIBS'" >&3
 fi
+
 if [ -f /usr/include/readline/readline.h ]
 then
 	case "$osname" in
@@ -467,6 +496,7 @@ then
 	esac
 	echo "READLINE_LIBS='$READLINE_LIBS'" >&3
 fi
+
 
 if [ "$USE_TASKS" = yes ]
 then
@@ -512,6 +542,7 @@ then
 	echo "XCLIP='$XCLIP'" >&3
 fi
 
+
 echo '
 #include <iconv.h>
 int main(int argc, char **argv) { iconv_t it; it = iconv_open("utf-8", "utf-8"); return 0;}
@@ -536,6 +567,7 @@ else
 	fi
 fi
 rm -f /tmp/$$*
+
 
 
 echo >&3
@@ -646,11 +678,16 @@ fi
 if [ -f /usr/include/float.h ]
 then
 	echo '#define HAVE_FLOAT_H' >&3
+	exit 1
 fi
 
-if [ -f /usr/include/sys/io.h ]
+find /usr/include -iname io.h | grep sys
+if [ $? = 0 ]
 then
 	echo '#define HAVE_SYS_IO_H' >&3
+else
+	echo 'Warning: system does not have program io.h'
+	exit 1
 fi
 
 if [ -f /usr/bin/wget ]
@@ -665,18 +702,31 @@ else
 	fi
 fi
 
+
 if [ -f /usr/include/zlib.h ]
 then
 	echo '#define HAVE_ZLIB_H' >&3
 else
+	echo '*******************************************'
+	echo 'Warning: zlib-dev package not installed'
 	echo 'Warning: system do not have installed ZLIB development'
+	echo ''
+	sleep 5
 fi
+
 if [ -f /usr/include/regex.h ]
 then
 	echo '#define HAVE_REGEX_H' >&3
 else
+	echo '******************************************'
+	echo 'Warning: libregf-dev package not installed'
 	echo 'Warning: system do not have installed REGEX development'
+	echo ''
+	sleep 5
 fi
+
+
+
 if [ -f /usr/include/readline/readline.h ]
 then
 	echo '#define HAVE_READLINE_H' >&3
@@ -694,8 +744,12 @@ int main(int argc, char **argv) { rl_already_prompted=1; return 0;}
 	fi
 	rm -f /tmp/$$*
 else
+        echo '******************************************'
+        echo 'Warning: libreadline-dev package not installed'
 	echo 'Warning: system does not have READLINE development'
 	echo 'Warning: clip_dbg will not work !!!'
+	echo ''
+	sleep 5
 fi
 
 if [ "$osname" = "SUNOS" ]
@@ -718,6 +772,8 @@ rm -f /tmp/$$*
 
 fi
 
+
+
 echo '
 #include <sys/time.h>
 int main(int argc, char **argv) { struct timeval tv; gettimeofday(&tv, 0); return 0;}
@@ -732,21 +788,34 @@ fi
 rm -f /tmp/$$*
 
 
-if [ -f /usr/include/sys/mman.h ]
+find /usr/include -iname mman.h | grep sys
+if [ $? = 0 ]
 then
 	echo '#define HAVE_MMAN_H' >&3
 else
-	echo '#define NO_MMAP' >&3
+	echo '#define NO_MMAN' >&3
 fi
 
-if [ -f /usr/include/sys/vfs.h ]
+find /usr/include -iname vfs.h | grep sys
+if [ $? = 0 ]
 then
 	echo '#define HAVE_VFS_H' >&3
+else
+	echo 'Warning: clip compilation may have a problems'
+	echo 'Missing sys/vfs.h'
+	exit 1
+
 fi
 
-if [ -f /usr/include/sys/statvfs.h ]
+
+find /usr/include -iname statvfs.h | grep sys
+if [ $? = 0 ]
 then
 	echo '#define HAVE_STATVFS_H' >&3
+else
+	echo 'Warning: clip compilation may have a problems'
+	echo 'Missing sys/vfs.h'
+	exit 1
 fi
 
 #	ptmx support
@@ -802,6 +871,7 @@ then
 else
 	echo '#undef HAVE_ICONV' >&3
 fi
+
 
 case "$osname" in
 	CYGWIN*)
