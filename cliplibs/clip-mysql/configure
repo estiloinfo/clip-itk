@@ -1,0 +1,10 @@
+#!/bin/sh
+test -f /usr/include/mysql/mysql.h -o -f /usr/local/include/mysql/mysql.h
+if [ $? != 0 ]
+then
+	echo "**************************************"
+        echo 'Warning: default-libmysqlclient-dev package not installed'
+        echo 'Warning: libclip-mysql make skip'
+	echo ""
+	exit 1
+fi
