@@ -51,8 +51,8 @@ case "$uname" in
 		DLLREALSUFF='.dll'
 esac
 
-echo "**************************************"
-printf "configure: creating clip-gtkcfg.h .."
+echo "**************************************" >> ${LOG}
+printf "configure: creating clip-gtkcfg.h .." >> ${LOG}
 
 exec 3>clip-gtkcfg.h
 
@@ -87,7 +87,7 @@ gtkprefix=`gtk-config --prefix 2>/dev/null`
 
 if [ $? -ne 0 ]
 then
-	echo "Warning: The gtk-config script installed by GTK could not be found"
+	echo "Warning: The gtk-config script installed by GTK could not be found" >> ${LOG}
 	USE_GTK=no
 else
 ##	LIBS='-lgtk -lgdk'
@@ -114,7 +114,7 @@ else
 	if [ ! \( "$GTK_MAJOR" -ge 1 -o "$GTK_MINOR" -ge 2 -o "$GTK_MAJOR" -gt 1 \) ]
 	then
 		echo
-		echo 'Warning: system must have installed GTK+ version 1.2 or above'
+		echo 'Warning: system must have installed GTK+ version 1.2 or above' >> ${LOG}
 	fi
 fi
 

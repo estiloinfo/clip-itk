@@ -351,29 +351,35 @@ fi
 flex -V >/dev/null 2>&1
 if [ $? != 0 ]
 then
-	echo '*******************************************'
-	echo 'Warning: flex package does not installed'
-	echo 'Warning: clip compilation may have a problems'
+	echo '*******************************************' >> ${LOG}
+	echo 'Warning: flex package does not installed' >> ${LOG}
+	echo 'Warning: clip compilation may have a problems' >> ${LOG}
 	exit 1
+else
+	echo "FLEX: "$(flex -V) >> ${LOG}
 fi
 
 bison -V >/dev/null 2>&1
 if [ $? != 0 ]
 then
-	echo '*******************************************'
-	echo 'Warning: bison package does not installed'
-	echo 'Warning: clip compilation may have a problems'
+	echo '*******************************************' >> ${LOG}
+	echo 'Warning: bison package does not installed' >> ${LOG}
+	echo 'Warning: clip compilation may have a problems' >> ${LOG}
 	exit 1
+else
+	echo "BISON: "$(bison -V | head -n1) >> ${LOG}
 fi
 
 find /usr/include -iname term.h | grep term.h
 if [ $? != 0 ]
 then
-	echo '*******************************************'
-	echo 'Warning: libncurses-dev package does not installed'
-	echo 'Warning: system do not have installed NCURSES development'
-	echo 'Warning: clip compilation may have a problems'
+	echo '*******************************************' >> ${LOG}
+	echo 'Warning: libncurses-dev package does not installed' >> ${LOG}
+	echo 'Warning: system do not have installed NCURSES development' >> ${LOG}
+	echo 'Warning: clip compilation may have a problems' >> ${LOG}
 	exit 1 
+else
+	echo "NCURSES-DEV: Installed" >> ${LOG}
 fi
 
 find /usr/include -iname pth.h | grep pth.h
@@ -384,20 +390,21 @@ then
 	#	make clean std_tst >/dev/null 2>&1
 	if [ $? = 0 ]
 	then
+		echo "PTH-DEV: Installed" >>${LOG}
 		USE_TASKS=yes
 	else
-		echo '*******************************************'
-		echo 'Error: Task dont work'
+		echo '*******************************************' >> ${LOG}
+		echo 'Error: Task dont work' >> ${LOG}
 		exit 1
 
 	fi
 	cd ..
 else
 	USE_TASKS=no
-	echo '*******************************************'
-	echo 'Warning: libpth-dev package does not installed'
-	echo 'Warning: system do not have installed PTH development'
-	echo 'Warning: cliplib compilation may have a problems'
+	echo '*******************************************' >> ${LOG}
+	echo 'Warning: libpth-dev package does not installed' >> ${LOG}
+	echo 'Warning: system do not have installed PTH development' >> ${LOG}
+	echo 'Warning: cliplib compilation may have a problems' >> ${LOG}
 	exit 1
 	
 fi
@@ -405,12 +412,13 @@ fi
 msgfmt -V >/dev/null 2>&1
 if [ $? != 0 ]
 then
-	echo '*******************************************'
-	echo 'Warning: gettext package does not installed'
-	echo 'Warning: clip_msgfmt and clip_msgmerge will not work'
+	echo '*******************************************' >> ${LOG}
+	echo 'Warning: gettext package does not installed' >> ${LOG}
+	echo 'Warning: clip_msgfmt and clip_msgmerge will not work' >> ${LOG}
 	echo ''
 	NO_GETTEXT=yes
-	sleep 5
+else
+	echo "GETTEXT: "$(gettext -V | head -n1) >> ${LOG}
 fi
 
 if [ "$USE_TASKS" = yes -a -f task/USE_PTH ]
@@ -559,9 +567,10 @@ else
 	then
 		echo 'ICONV_LIB=' >&3
 		echo "PO_BINS='po_extr$EXESUFF po_subst$EXESUFF po_compat$EXESUFF'" >&3
+		echo "ICONV: Installed" >> ${LOG}
 		HAVE_ICONV=yes
 	else
-		echo 'NO ICONV library found, doc building will have problems'
+		echo 'NO ICONV library found, doc building will have problems' >> ${LOG}
 		echo "PO_BINS='po_extr$EXESUFF po_compat$EXESUFF'" >&3
 		HAVE_ICONV=
 	fi
@@ -686,7 +695,7 @@ if [ $? = 0 ]
 then
 	echo '#define HAVE_SYS_IO_H' >&3
 else
-	echo 'Warning: system does not have program io.h'
+	echo 'Warning: system does not have program io.h' >> ${LOG}
 	exit 1
 fi
 
@@ -698,7 +707,7 @@ else
 	then
 		echo '#define WGET_PRG "/usr/local/bin"' >&3
 	else
-		echo 'Warning: system does not have program WGET'
+		echo 'Warning: system does not have program WGET' >> ${LOG}
 	fi
 fi
 
@@ -706,29 +715,26 @@ fi
 if [ -f /usr/include/zlib.h ]
 then
 	echo '#define HAVE_ZLIB_H' >&3
+	echo "ZLIB-DEV: Installed" >> ${LOG}
 else
-	echo '*******************************************'
-	echo 'Warning: zlib-dev package not installed'
-	echo 'Warning: system do not have installed ZLIB development'
-	echo ''
-	sleep 5
+	echo '*******************************************' >> ${LOG}
+	echo 'Warning: zlib-dev package not installed' >> ${LOG}
+	echo 'Warning: system do not have installed ZLIB development' >> ${LOG}
 fi
 
 if [ -f /usr/include/regex.h ]
 then
 	echo '#define HAVE_REGEX_H' >&3
+	echo "LIBREGEX-DEV: Installed" >> ${LOG}
 else
-	echo '******************************************'
-	echo 'Warning: libregf-dev package not installed'
-	echo 'Warning: system do not have installed REGEX development'
-	echo ''
-	sleep 5
+	echo '******************************************' >> ${LOG}
+	echo 'Warning: libregf-dev package not installed' >> ${LOG}
+	echo 'Warning: system do not have installed REGEX development' >> ${LOG}
 fi
-
-
 
 if [ -f /usr/include/readline/readline.h ]
 then
+	echo "LIBREADLINE-DEV: Installed" >> ${LOG}
 	echo '#define HAVE_READLINE_H' >&3
 	echo '
 #include <stdio.h>
@@ -744,12 +750,10 @@ int main(int argc, char **argv) { rl_already_prompted=1; return 0;}
 	fi
 	rm -f /tmp/$$*
 else
-        echo '******************************************'
-        echo 'Warning: libreadline-dev package not installed'
-	echo 'Warning: system does not have READLINE development'
-	echo 'Warning: clip_dbg will not work !!!'
-	echo ''
-	sleep 5
+        echo '******************************************' >> ${LOG}
+        echo 'Warning: libreadline-dev package not installed' >> ${LOG}
+	echo 'Warning: system does not have READLINE development' >> ${LOG}
+	echo 'Warning: clip_dbg will not work !!!' >> ${LOG}
 fi
 
 if [ "$osname" = "SUNOS" ]
@@ -801,10 +805,9 @@ if [ $? = 0 ]
 then
 	echo '#define HAVE_VFS_H' >&3
 else
-	echo 'Warning: clip compilation may have a problems'
-	echo 'Missing sys/vfs.h'
+	echo 'Warning: clip compilation may have a problems' >> ${LOG}
+	echo 'Missing sys/vfs.h' >> ${LOG}
 	exit 1
-
 fi
 
 
@@ -813,8 +816,8 @@ if [ $? = 0 ]
 then
 	echo '#define HAVE_STATVFS_H' >&3
 else
-	echo 'Warning: clip compilation may have a problems'
-	echo 'Missing sys/vfs.h'
+	echo 'Warning: clip compilation may have a problems' >> ${LOG}
+	echo 'Missing sys/vfs.h' >> ${LOG}
 	exit 1
 fi
 

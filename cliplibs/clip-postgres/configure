@@ -21,10 +21,9 @@ if [ ! -z "$PGLIBDIR" ]; then
 fi
 
 if [ -z "$PGINCDIR" -o -z "$PGLIBDIR" ]; then
-        echo "**************************************"
-        echo 'Warning: postgresql-server-dev-all package not installed'
-        echo 'Warning: libclip-postgres make skip'
-        echo ""
+        echo "**************************************" >> ${LOG}
+        echo 'Warning: postgresql-server-dev-all package not installed' >> ${LOG}
+        echo 'Warning: libclip-postgres make skip' >> ${LOG}
 	exit 1
 fi
 

@@ -1,5 +1,6 @@
 #!/bin/sh
 
+LOG=$(pwd)/REPORT.TXT
 
 for opt in $*
 do
@@ -74,7 +75,7 @@ then
 	./clean.sh
 fi
 
-export CLIPROOT
+export CLIPROOT LOG
 #export -n DESTDIR
 _DESTDIR="$DESTDIR"
 unset DESTDIR
@@ -82,13 +83,23 @@ DESTDIR="$_DESTDIR"
 mkdir -p ${DESTDIR}${CLIPROOT}/include
 mkdir -p ${HOME}/bin
 
-if [ -z "$noclip" ]
-then
+echo "Compilation report" > ${LOG}
+echo "------------------" >> ${LOG}
+echo "CLIPROOT:"${CLIPROOT} >> ${LOG}
+echo "RFLAG:"${RFLAG}  >> ${LOG}
+echo "CLIP_CONFIGURE_FLAGS:"${CLIP_CONFIGURE_FLAGS} >> ${LOG}
 
-cd clip || exit 1
+if [ -z "$noclip" ]; then
+
+	cd clip || exit 1
 #	./configure ${RFLAG} ${CLIP_CONFIGURE_FLAGS}
 #	$MAKE install || exit 2
-	./configure ${RFLAG} ${CLIP_CONFIGURE_FLAGS} || exit 2
+	./configure ${RFLAG} ${CLIP_CONFIGURE_FLAGS}
+ 	if [ $? != 0 ]; then
+		echo ""
+		cat ${LOG}
+		exit 2
+	fi
 	$MAKE install DESTDIR=${DESTDIR}
 cd $pwd
 
@@ -187,3 +198,5 @@ strip ${DESTDIR}${CLIP_ROOT}/lib/*${DLLREALSUFF}
 
 fi
 
+echo ""
+cat ${LOG}
