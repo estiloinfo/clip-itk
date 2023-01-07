@@ -1,20 +1,20 @@
 #!/bin/sh
 
 if [ -z "$PGINCDIR" ]; then
-	PGINCDIR=$(find /usr -iname libpq-fe.h 2>/dev/null)
+	PGINCDIR=$(find /usr -iname libpq-fe.h | head -n1 2>/dev/null)
 fi
 if [ -z "$PGINCDIR" ]; then
-	PGINCDIR=$(find /opt/postgresql -iname libpq-fe.h 2>/dev/null)
+	PGINCDIR=$(find /opt/postgresql -iname libpq-fe.h | head -n1 2>/dev/null)
 fi
 if [ ! -z "$PGINCDIR" ]; then
 	PGINCDIR=$(dirname $PGINCDIR)
 fi
 
 if [ -z "$PGLIBDIR" ]; then
-	PGLIBDIR=$(find /usr -iname libpq.so 2>/dev/null)
+	PGLIBDIR=$(find /usr -iname libpq.so | head -n1 2>/dev/null)
 fi
 if [ -z "$PGLIBDIR" ]; then
-	PGLIBDIR=$(find /opt/postgresql -iname libpq.so 2>/dev/null)
+	PGLIBDIR=$(find /opt/postgresql -iname libpq.so | head -n1 2>/dev/null)
 fi
 if [ ! -z "$PGLIBDIR" ]; then
 	PGLIBDIR=$(dirname $PGLIBDIR)
