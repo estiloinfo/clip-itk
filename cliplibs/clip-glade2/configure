@@ -1,0 +1,4 @@
+#!/bin/sh
+echo '    Warning: Compilation skipped' >> ${LOG}
+echo '    Remove cliplibs/clip-glade/configure to try compilation' >> ${LOG}
+exit 1
