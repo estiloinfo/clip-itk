@@ -1,8 +1,7 @@
 #!/bin/sh
 if [ ! -f /usr/include/zlib.h ]
 then
-	echo "**************************************" >> ${LOG}
-        echo 'Warning: zlib1g-dev package not installed' >> ${LOG}
-        echo 'Warning: libclip-gzip make skip' >> ${LOG}
+	echo '    Warning: zlib1g-dev package not installed' >> ${LOG}
+	echo '    Warning: libclip-gzip make skip' >> ${LOG}
 	exit 1
 fi

@@ -84,8 +84,7 @@ case "$uname" in
 		DLLREALSUFF='.dll'
 esac
 
-echo   "***************************************"  >> ${LOG}
-printf "configure: creating clip-gtkcfg2.h .." >> ${LOG}
+echo   "configure: creating clip-gtkcfg2.h .."
 
 PKGCONFIG=""
 GTK2_VERSION=""
@@ -99,20 +98,20 @@ else
     PKGCONFIG=`which pkg-config`
 fi
 if [ -z $PKGCONFIG ]; then
-    echo "ERROR!!!" >> ${LOG}
-    echo "Warning: The pkg-config not installed" >> ${LOG}
-    echo "System MUST have installed pkg-config first!" >> ${LOG}
-    echo "Warning: libclip-gtk2 make skip" >> ${LOG}
+    echo "    ERROR!!!" >> ${LOG}
+    echo "    Warning: The pkg-config not installed" >> ${LOG}
+    echo "    System MUST have installed pkg-config first!" >> ${LOG}
+    echo "    Warning: libclip-gtk2 make skip" >> ${LOG}
     USE_GTK=no
     exit 1
 fi
 
 gtkprefix=`$PKGCONFIG gtk+-2.0 --libs 2>/dev/null`
 if [ $? -ne 0 ]; then
-    echo "ERROR!!!" >> ${LOG}
-    echo "Warning: The gtk+-2.0 not installed" >> ${LOG}
-    echo "gtk2 not detected" >> ${LOG}
-    echo "Warning: libclip-gtk2 make skip" >> ${LOG}
+    echo "    ERROR!!!" >> ${LOG}
+    echo "    Warning: The gtk+-2.0 not installed" >> ${LOG}
+    echo "    gtk2 not detected" >> ${LOG}
+    echo "    Warning: libclip-gtk2 make skip" >> ${LOG}
     USE_GTK=no
     exit 1
 fi
@@ -127,7 +126,8 @@ GTK_MAJOR=`$PKGCONFIG gtk+-2.0 --modversion|cut -d. -f1`
 GTK_MINOR=`$PKGCONFIG gtk+-2.0 --modversion|cut -d. -f2`
 if [ ! \( "$GTK_MAJOR" -le 2  \) ]; then
     echo
-    echo 'Warning: system must have installed GTK+ version 2.0 or above' >> ${LOG}
+    echo '    Warning: system must have installed GTK+ version 2.0 or above' >> ${LOG}
+    exit 1
 fi
 
 PANGO_MAJOR=`$PKGCONFIG pango --modversion|cut -d. -f1`

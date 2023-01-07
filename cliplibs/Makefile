@@ -3,7 +3,6 @@ ifndef CLIPROOT
 endif
 
 include $(CLIPROOT)/include/Makefile.inc
-#
 
 dirs = clip-gzip clip-bzip2 clip-crypto clip-gd clip-fcgi \
        clip-gtk2 \
@@ -14,9 +13,11 @@ dirs = clip-gzip clip-bzip2 clip-crypto clip-gd clip-fcgi \
 #clip-cti  clip-fw clip-gtk clip-gtkextra
 
 all local user system install lib:
+	(echo "*************** Compiling LIBS *****************" >> ${LOG});	
 	for dir in $(dirs); \
 	do \
-		(cd $$dir;\
+		(echo --- $$dir >> ${LOG};\
+		cd $$dir;\
 		if [ -f configure ]; then\
 			./configure && [ $$? = 0 ] && $(MAKE) $@; \
 		else \
