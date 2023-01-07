@@ -31,7 +31,8 @@ fi
 
 if [ -z "$LIBODBC" ]
 then
-	echo 'No ODBC driver`s manager were found'
+	echo '    Warning: unixodbc-dev package not installed' >> ${LOG}
+	echo '    Warning: libclip-odbc make skip' >> ${LOG}
 	exitf 1
 fi
 
