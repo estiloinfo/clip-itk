@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ ! -f /usr/include/fcgi_config.h ]
+then
+	echo '    Warning: libfcgi-dev package not installed' >> ${LOG}
+	echo '    Warning: libclip-fcgi make skip' >> ${LOG}
+	exit 1
+fi
