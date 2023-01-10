@@ -4,8 +4,12 @@ libdir="$CLIPROOT/lib"
 
 if [ ! -f "$libdir/libclip-xml.so" ]
 then
-	echo '    Warning: library clip-xml does not installed' >> ${LOG}
-        echo '    Warning: libclip-ui make skip' >> ${LOG}
+	if [ $1 = "install" ]; then
+		echo '    Warning: lib not installed' >> ${LOG}
+	else
+		echo '    Warning: library clip-xml does not installed' >> ${LOG}
+		echo '    Warning: libclip-ui make skip' >> ${LOG}
+	fi
 	exit 1
 fi
 

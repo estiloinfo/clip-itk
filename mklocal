@@ -121,7 +121,10 @@ echo "-v0
 	CLIPROOT=${DESTDIR}${CLIPROOT}
 	LD_LIBRARY_PATH=${DESTDIR}/usr/lib:$LD_LIBRARY_PATH
 	export CLIPROOT  LD_LIBRARY_PATH
+
+	echo "*************** Compiling LIBS *****************" >> ${LOG}
 	$MAKE
+	echo "*************** Installing  LIBS *****************" >> ${LOG}
 	$MAKE install DESTDIR=''
 #)
 

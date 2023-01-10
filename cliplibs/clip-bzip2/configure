@@ -1,7 +1,11 @@
 #!/bin/sh
 if [ ! -f /usr/include/bzlib.h ]
 then
+    if [ $1 = "install" ]; then
+        echo '    Warning: lib not installed' >> ${LOG}
+    else
         echo '    Warning: libbz2-dev not installed' >> ${LOG}
         echo '    Warning: libclip-bzip2 make skip' >> ${LOG}
-	exit 1
+    fi
+    exit 1
 fi

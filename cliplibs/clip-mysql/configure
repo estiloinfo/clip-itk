@@ -2,7 +2,11 @@
 test -f /usr/include/mysql/mysql.h -o -f /usr/local/include/mysql/mysql.h
 if [ $? != 0 ]
 then
-        echo '    Warning: default-libmysqlclient-dev package not installed' >> ${LOG}
-        echo '    Warning: libclip-mysql make skip' >> ${LOG}
+	if [ $1 = "install" ]; then
+		echo '    Warning: lib not installed' >> ${LOG}
+	else
+		echo '    Warning: default-libmysqlclient-dev package not installed' >> ${LOG}
+		echo '    Warning: libclip-mysql make skip' >> ${LOG}
+	fi
 	exit 1
 fi

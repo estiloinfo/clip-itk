@@ -31,8 +31,12 @@ fi
 
 if [ -z "$LIBODBC" ]
 then
-	echo '    Warning: unixodbc-dev package not installed' >> ${LOG}
-	echo '    Warning: libclip-odbc make skip' >> ${LOG}
+	if [ $1 = "install" ]; then
+		echo '    Warning: lib not installed' >> ${LOG}
+	else
+		echo '    Warning: unixodbc-dev package not installed' >> ${LOG}
+		echo '    Warning: libclip-odbc make skip' >> ${LOG}
+	fi
 	exitf 1
 fi
 
