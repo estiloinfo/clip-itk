@@ -6,7 +6,7 @@
 
 DEBUGFLAGS="-g"
 STD_LIBDIR=''
-STD_LIB_DIR=/usr/lib
+STD_LIB_DIR=${CLIP_LIBS_PATH}
 DLLSUFF='.so'
 DLLREALSUFF='.so'
 CLIP_DLLIMPORT=''
@@ -136,7 +136,7 @@ do
 		echo "	-m=<LEVEL> for memdebug with level <LEVEL>"
 		echo "	-c  to clean cache"
 		echo "	-r  release options"
-		echo "	-s  use standard libdir (/usr/lib)"
+		echo "	-s  use standard libdir by system bit type /usr/lib32 or /usr/lib64"
 		echo "	-l  set standard libdir to /usr/local/lib"
 		echo "	-a  force align code"
 		echo "	-t  do NOT use tasks code"
@@ -146,7 +146,6 @@ do
 		;;
 	esac
 done
-
 
 if [ "$USE_MEMDBG" = yes ]
 then

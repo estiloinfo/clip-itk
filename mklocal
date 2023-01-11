@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -x
 LOG=$(pwd)/REPORT.TXT
 
 for opt in $*
@@ -52,13 +52,12 @@ fi
 LC_ALL=C
 LC_MESSAGES=C
 PATH="$HOME/bin:$PATH"
+
 if [ -z "$CLIP_NAMES" ]
 then
 	CLIP_NAMES=yes
-		export CLIP_NAMES
+	export CLIP_NAMES
 fi
-
-export MAKE LANG LC_ALL LC_MESSAGES PATH
 
 pwd=`pwd`
 
@@ -75,7 +74,14 @@ then
 	./clean.sh
 fi
 
-export CLIPROOT LOG
+#Determine system bits
+BITS=$(getconf LONG_BIT)
+
+#Determine library path install
+CLIP_LIBS_PATH="/usr/"$(ls /usr | grep lib$BITS)
+
+export MAKE LANG LC_ALL LC_MESSAGES PATH CLIP_LIBS_PATH CLIPROOT LOG
+
 #export -n DESTDIR
 _DESTDIR="$DESTDIR"
 unset DESTDIR
@@ -88,21 +94,21 @@ echo "------------------" >> ${LOG}
 echo "CLIPROOT:"${CLIPROOT} >> ${LOG}
 echo "RFLAG:"${RFLAG}  >> ${LOG}
 echo "CLIP_CONFIGURE_FLAGS:"${CLIP_CONFIGURE_FLAGS} >> ${LOG}
+echo "CLIP_LIBS_PATH:"${CLIP_LIBS_PATH} >> ${LOG}
 
 if [ -z "$noclip" ]; then
 
 	cd clip || exit 1
-#	./configure ${RFLAG} ${CLIP_CONFIGURE_FLAGS}
-#	$MAKE install || exit 2
+	
 	./configure ${RFLAG} ${CLIP_CONFIGURE_FLAGS}
- 	if [ $? != 0 ]; then
+	if [ $? != 0 ]; then
 		echo ""
 		cat ${LOG}
 		exit 2
 	fi
-	$MAKE install DESTDIR=${DESTDIR}
-cd $pwd
 
+	$MAKE install DESTDIR=${DESTDIR}
+	cd $pwd
 fi
 
 #. clip/clipcfg.sh || exit 2
@@ -119,7 +125,7 @@ echo "-v0
 #(
 	cd cliplibs
 	CLIPROOT=${DESTDIR}${CLIPROOT}
-	LD_LIBRARY_PATH=${DESTDIR}/usr/lib:$LD_LIBRARY_PATH
+	LD_LIBRARY_PATH=${DESTDIR}${CLIP_LIBS_PATH}:$LD_LIBRARY_PATH
 	export CLIPROOT  LD_LIBRARY_PATH
 
 	echo "*************** Compiling LIBS *****************" >> ${LOG}
@@ -174,17 +180,20 @@ cd $pwd
 
 if [ -n "$release" ]
 then
-	echo mkdir -p ${DESTDIR}/usr/lib
-	mkdir -p ${DESTDIR}/usr/lib
 
+	if [ ! -d ${DESTDIR}${CLIP_LIBS_PATH} ]; then
+		echo mkdir -p ${DESTDIR}${CLIP_LIBS_PATH}
+		mkdir -p ${DESTDIR}${CLIP_LIBS_PATH}
+	fi
+	
 	cd ${DESTDIR}${CLIPROOT}/lib
 	if [ -n "$(ls *.so)" ]
 	then
 		for n in *.so
 		do
-			echo ln -sf ${CLIPROOT}/lib/$n ${DESTDIR}/usr/lib
-			rm -f ${DESTDIR}/usr/lib/$n
-			ln -sf ${CLIPROOT}/lib/$n ${DESTDIR}/usr/lib
+			echo ln -sf ${CLIPROOT}/lib/$n ${DESTDIR}${CLIP_LIBS_PATH}
+			rm -f ${DESTDIR}${CLIP_LIBS_PATH}/$n
+			ln -sf ${CLIPROOT}/lib/$n ${DESTDIR}${CLIP_LIBS_PATH}
 			echo done
 		done
 	fi
