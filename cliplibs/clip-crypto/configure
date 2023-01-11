@@ -1,7 +1,11 @@
 #!/bin/sh
 if [ ! -f /usr/include/openssl/evp.h ]
 then
-        echo '    Warning: libssl-dev package not installed' >> ${LOG}
-        echo '    Warning: libclip-crypto make skip' >> ${LOG}
+	if [ $1 = "install" ]; then
+		echo '    Warning: lib not installed' >> ${LOG}
+	else
+		echo '    Warning: libssl-dev package not installed' >> ${LOG}
+		echo '    Warning: libclip-crypto make skip' >> ${LOG}
+	fi
 	exit 1
 fi
