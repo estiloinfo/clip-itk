@@ -98,10 +98,14 @@ else
     PKGCONFIG=`which pkg-config`
 fi
 if [ -z $PKGCONFIG ]; then
-    echo "    ERROR!!!" >> ${LOG}
-    echo "    Warning: The pkg-config not installed" >> ${LOG}
-    echo "    System MUST have installed pkg-config first!" >> ${LOG}
-    echo "    Warning: libclip-gtk2 make skip" >> ${LOG}
+    if [ $1 = "install" ]; then
+        echo '    Warning: lib not installed' >> ${LOG}
+    else
+        echo "    ERROR!!!" >> ${LOG}
+        echo "    Warning: The pkg-config not installed" >> ${LOG}
+        echo "    System MUST have installed pkg-config first!" >> ${LOG}
+        echo "    Warning: libclip-gtk2 make skip" >> ${LOG}
+    fi
     USE_GTK=no
     exit 1
 fi
