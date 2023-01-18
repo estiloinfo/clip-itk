@@ -78,7 +78,13 @@ fi
 BITS=$(getconf LONG_BIT)
 
 #Determine library path install
-CLIP_LIBS_PATH="/usr/"$(ls /usr | grep lib$BITS)
+CLIP_LIBS_PATH=$(grep "/usr/lib" /etc/ld.so.conf | grep $BITS | head -n1)
+if [ -z $CLIP_LIBS_PATH ] ; then
+        CLIP_LIBS_PATH=$(grep -r "/usr/lib" /etc/ld.so.conf.d | grep $BITS | head -n1 | cut -d: -f2)
+fi
+if [ -z $CLIP_LIBS_PATH ] ; then
+        CLIP_LIBS_PATH=/usr/lib
+fi
 
 export MAKE LANG LC_ALL LC_MESSAGES PATH CLIP_LIBS_PATH CLIPROOT LOG
 
