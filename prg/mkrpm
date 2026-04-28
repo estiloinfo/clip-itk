@@ -18,8 +18,8 @@ fi
 
 name=clip-prg
 
-version=$(head -1 ../debian/changelog |cut -d'(' -f2|cut -d'-' -f1)
-release=$(head -1 ../debian/changelog |cut -d'(' -f2|cut -d'-' -f2|cut -d')' -f1)
+version=$(head -1 ../packaging/debian/changelog |cut -d'(' -f2|cut -d'-' -f1)
+release=$(head -1 ../packaging/debian/changelog |cut -d'(' -f2|cut -d'-' -f2|cut -d')' -f1)
 root=/tmp/mkspec$$
 
 echo "%define name $name

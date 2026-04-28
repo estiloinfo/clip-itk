@@ -2,7 +2,7 @@
 
 unset DESTDIR
 
-sed ../debian/changelog -e "s/^clip/clip-prg/g" > debian/changelog
+sed ../packaging/debian/changelog -e "s/^clip/clip-prg/g" > debian/changelog
 
 if [ -f Makefile.in -a -f ./configure ]
 then
