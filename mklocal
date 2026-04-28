@@ -124,12 +124,12 @@ echo "-v0
 -r
 -l" > ${DESTDIR}${CLIPROOT}/cliprc/clipflags
 
-#cd cliplibs
+#cd libs
 
 #$MAKE install
 
 #(
-	cd cliplibs
+	cd libs
 	CLIPROOT=${DESTDIR}${CLIPROOT}
 	LD_LIBRARY_PATH=${DESTDIR}${CLIP_LIBS_PATH}:$LD_LIBRARY_PATH
 	export CLIPROOT  LD_LIBRARY_PATH

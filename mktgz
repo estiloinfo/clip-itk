@@ -160,7 +160,7 @@ tar cvf - \
 
 cd $pwd
 #echo "asdf" $pwd $CLIPROOT $DESTDIR
-cd cliplibs
+cd libs
 $MAKE tgz
 cd $pwd
 
