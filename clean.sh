@@ -26,7 +26,7 @@ cd $pwd
 cd prg
 	./Clean.sh || true
 cd $pwd
-cd cliplibs
+cd libs
 $MAKE clean
 rm -f clip-dev.spec _lst _nlst
 cd $pwd

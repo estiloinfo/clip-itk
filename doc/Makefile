@@ -13,9 +13,9 @@ MAIN = index
 ROOT := $(shell cd ..; pwd)
 PWD := $(shell pwd)
 
-DIRS =  clip/doc cliplibs/clip-gzip cliplibs/clip-bzip2 \
-	cliplibs/clip-crypto cliplibs/clip-fcgi \
-	cliplibs/clip-com
+DIRS =  clip/doc libs/clip-gzip libs/clip-bzip2 \
+	libs/clip-crypto libs/clip-fcgi \
+	libs/clip-com
 
 all: html
 

@@ -124,8 +124,8 @@ export LD_LIBRARY_PATH="${DESTDIR}%{LIBDIR}:${LD_LIBRARY_PATH}"
 #export SCLIPROOT
 #=${SCLIPROOT}
 
-# build cliplibs
-pushd cliplibs
+# build libs
+pushd libs
 	make %{rpm_target}
 popd
 
