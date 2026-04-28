@@ -182,7 +182,7 @@ esac
 #C_FLAGS="-Wall -Wextra -I. $DEBUGFLAGS $OPTFLAGS $MDBG"
 C_FLAGS="-Wall -Wextra -I$CLIPROOT/include $DEBUGFLAGS $OPTFLAGS"
 C_LIBS="-L$CLIPROOT/lib -lclip"
-ADD_CFLAGS="-fPIC -fcommon"
+ADD_CFLAGS="-fPIC -fcommon -Wno-incompatible-pointer-types"
 
 uname=`uname -s`
 uver=`uname -r`

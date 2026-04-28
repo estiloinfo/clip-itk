@@ -5553,7 +5553,7 @@ pass_PshiftNode(void *self, Pass pass, int level, void *par)
 }
 
 Node *
-new_PshiftNode(Node * expr)
+new_PshiftNode(void)
 {
 	NEWVAR(Node, ret);
 

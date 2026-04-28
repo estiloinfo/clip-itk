@@ -343,7 +343,7 @@ Node *new_ArrElNode(Node * arr, Node * expr, int op);
 Node *new_MacroNode(Node * expr, int isexpr);
 
 Node *new_PcountNode();
-Node *new_PshiftNode();
+Node *new_PshiftNode(void);
 Node *new_ParnNode(Node * expr);
 Node *new_PallNode();
 
