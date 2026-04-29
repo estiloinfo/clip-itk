@@ -1,5 +1,5 @@
 #CC=gcc
-CFLAGS=-Wall -Wextra -O -g -fPIC #-pg -DMEMDBG
+CFLAGS=-Wall -Wextra -O -g -fPIC -I$(CLIP_INCDIR) #-pg -DMEMDBG
 
 SCRLIB = ./libscr.a
 SCROBJS = termgoto.o screen.o scankey.o keymap.o

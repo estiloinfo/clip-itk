@@ -229,7 +229,7 @@ $(FUNCSLIB):
 	cd funcs && $(MAKE)
 
 $(SCREEN):
-	cd screen && $(MAKE) libscr.a
+	cd screen && $(MAKE) CLIP_INCDIR=$(CLIP_INCDIR) libscr.a
 
 $(TASK):
 	cd task && ./configure && $(MAKE)
