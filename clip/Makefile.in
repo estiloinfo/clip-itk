@@ -19,9 +19,14 @@ CLIPROOT = $(CLIP_ROOT)
 .SUFFIXES: .prg .c .po
 .PHONY:	tests screen hash
 
-SRCS	= coll.c list.c hash.c getopt.c getopt1.c clicutil.c \
-	  clic.y clic.lex file.c node.c locale.c \
-	  clip.c clicgt.c _win32.c
+vpath %.c compiler vm runtime stdlib common i18n platform tools
+vpath %.h compiler vm runtime stdlib common i18n platform
+vpath %.y compiler runtime i18n
+vpath %.lex compiler
+
+SRCS	= common/coll.c common/list.c common/hash.c platform/getopt.c platform/getopt1.c \
+	  compiler/clicutil.c compiler/clic.y compiler/clic.lex platform/file.c \
+	  compiler/node.c i18n/locale.c compiler/clip.c compiler/clicgt.c platform/_win32.c
 
 OBJS	= clic.tab.o lex.yy.o lex.cl.o coll.o list.o getopt.o getopt1.o \
 	  clicutil.o  clip.o file.o node.o clip_hash.o charset.o locale.o \
@@ -52,11 +57,12 @@ SCRIPTS=add_meta_tag joinlib.sh lowname tconv \
 
 #koitbl.o alttbl.o
 
-HASHSRCS = cliprt.c clipdbg.c clipvm.c clipmain.c rt.y _io.c \
-	   set.c _util.c _file.c _file1.c _string.c _date.c \
-	   clipbase.c _math.c _ctools_s.c diskutils.c _mem.c \
-	  _system.c _thread.c rational.c integer.c \
-	   _dbg.c _tcp.c _tcpserv.c _regex.c _thread.c
+HASHSRCS = runtime/cliprt.c runtime/clipdbg.c vm/clipvm.c compiler/clipmain.c runtime/rt.y \
+	   stdlib/_io.c stdlib/set.c stdlib/_util.c stdlib/_file.c stdlib/_file1.c \
+	   stdlib/_string.c stdlib/_date.c runtime/clipbase.c stdlib/_math.c \
+	   stdlib/_ctools_s.c stdlib/diskutils.c stdlib/_mem.c stdlib/_system.c \
+	   stdlib/_thread.c common/rational.c common/integer.c \
+	   stdlib/_dbg.c stdlib/_tcp.c stdlib/_tcpserv.c stdlib/_regex.c
 
 # mapbase.o
 
@@ -87,8 +93,20 @@ DEFS	=
 # -DVERSION=\"0.1\"
 # -DSYSTEM=\"$(SYSTEM_NAME)\"
 
-CFLAGS  = -I. -I./include $(C_FLAGS) $(ADD_CFLAGS) $(DEFS) $(MEMDBGFLAGS)
-BCFLAGS = -I. -I./include $(C_FLAGS) $(ADD_CFLAGS) $(DEFS)
+CLIP_SRCDIR := $(shell pwd)
+
+CFLAGS  = -I$(CLIP_SRCDIR) -I$(CLIP_SRCDIR)/include \
+          -I$(CLIP_SRCDIR)/compiler -I$(CLIP_SRCDIR)/vm \
+          -I$(CLIP_SRCDIR)/runtime -I$(CLIP_SRCDIR)/stdlib \
+          -I$(CLIP_SRCDIR)/common -I$(CLIP_SRCDIR)/i18n \
+          -I$(CLIP_SRCDIR)/platform \
+          $(C_FLAGS) $(ADD_CFLAGS) $(DEFS) $(MEMDBGFLAGS)
+BCFLAGS = -I$(CLIP_SRCDIR) -I$(CLIP_SRCDIR)/include \
+          -I$(CLIP_SRCDIR)/compiler -I$(CLIP_SRCDIR)/vm \
+          -I$(CLIP_SRCDIR)/runtime -I$(CLIP_SRCDIR)/stdlib \
+          -I$(CLIP_SRCDIR)/common -I$(CLIP_SRCDIR)/i18n \
+          -I$(CLIP_SRCDIR)/platform \
+          $(C_FLAGS) $(ADD_CFLAGS) $(DEFS)
 #  $(WARNFLAGS) $(DBGFLAGS) $(OPTFLAGS) -I$(INCLUDE)
 
 export CC CFLAGS
@@ -153,7 +171,7 @@ clip_msgfmt: clip_msgfmt.in configure
 
 $(CLIP):  $(OBJS) seq_no.txt $(MLIB)
 	$(CC) $(CFLAGS) $(STATICLINK) -DSEQ_NO=\"`cat seq_no.txt`\" \
-		-o $(CLIP) version.c \
+		-o $(CLIP) compiler/version.c \
 		$(OBJS) $(LIBS) $(ICONV_LIB) $(MLIB)
 
 seq_no.txt:
@@ -163,7 +181,7 @@ clipar:	clipar.o coll.o #getopt.o
 	$(CC) $(CFLAGS) $(STATICLINK) -o clipar clipar.o coll.o $(MLIB) #getopt.o
 
 clip_hash.o: cliphash.c
-	$(CC) $(BCFLAGS) -DSTANDALONE -o clip_hash.o -c cliphash.c
+	$(CC) $(BCFLAGS) -DSTANDALONE -o clip_hash.o -c $<
 
 calchash: calchash.o clip_hash.o
 	$(CC) $(BCFLAGS) -o calchash calchash.o clip_hash.o
@@ -192,7 +210,7 @@ hashextract: lex.hash.o clip_hash.o
 
 
 genlist: genlist.c
-	$(CC) $(CFLAGS) -o genlist genlist.c
+	$(CC) $(CFLAGS) -o genlist $<
 
 $(SQL): sql/*.c sql/*.h sql/*.prg
 	cd sql && $(MAKE)
@@ -290,7 +308,7 @@ pot:
 		 --keyword=_clic_ngettext:1,2 \
 		 --keyword=_clic_ngettext:2 \
 		 --omit-header --output=locale.pot/clip/clip.pot \
-		 *.c
+		 compiler/*.c
 	mkdir -p locale.pot/cliprt
 	xgettext --language=C \
 		 --keyword \
@@ -300,7 +318,7 @@ pot:
 		 --keyword=_clip_trap_printf:4 \
 		 --keyword=_clip_trap_printv:4 \
 		 --omit-header --output=locale.pot/cliprt/cliprt.pot \
-		 *.c rdd/*.c screen/*.c
+		 runtime/*.c stdlib/*.c vm/*.c rdd/*.c screen/*.c
 	CLIP_LOCALE_ROOT=`pwd` ./clip_msgmerge
 
 
@@ -396,7 +414,8 @@ inst_codb:
 	cd codb && tar cf - codb.ch codbcfg.ch codb_dbf.ch | (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
 
 inst_ch: $(INST_MEMDEBUG_H)
-	tar cf - clip.h _win32.h clipcfg.h hash.h Makefile.inc Makefile.tdoc clipcfg.sh screen/charset.h \
+	tar cf - clip.h clipcfg.h common/hash.h Makefile.inc Makefile.tdoc clipcfg.sh screen/charset.h \
+		platform/_win32.h \
 		| (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
 	cd rdd && tar cf - btree.h | (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
 	cd sql && tar cf - *.h | (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
@@ -436,10 +455,10 @@ cliprt.o: cliprt.c hashcode.h
 	$(CC) $(CFLAGS) -c $<
 
 _ctools_s.o: _ctools_s.c
-	$(CC) $(CFLAGS) -O -c  _ctools_s.c
+	$(CC) $(CFLAGS) -O -c $<
 
 _math.o: _math.c
-	$(CC) $(CFLAGS) -O0 -c _math.c
+	$(CC) $(CFLAGS) -O0 -c $<
 
 
 clic.tab.o: clic.tab.c clic.h
@@ -452,27 +471,27 @@ lex.cl.o: lex.cl.c
 	$(CC) $(CFLAGS) -c $<
 
 clic.tab.c: clic.y clic.h
-	$(YACC) -bclic -v -d clic.y
+	$(YACC) -bclic -v -d $<
 
 rt.tab.c: rt.y clic.h
-	$(YACC) -brt -prt -v -d rt.y
+	$(YACC) -brt -prt -v -d $<
 
 plural.tab.c: plural.y
-	$(YACC) -bplural -pplural plural.y
+	$(YACC) -bplural -pplural $<
 
 plural.tab.o: plural.tab.c
 
 #note: flex -i for case-insencitive parser
 _lex.yy.c: clic.lex clic.tab.h
-	flex -i clic.lex
+	flex -i $<
 
 _lex.cl.c: clic_c.lex clic.tab.h
-	flex -Pcl clic_c.lex
+	flex -Pcl $<
 
 lex.hash.o: lex.hash.c
 
 _lex.hash.c: hasher.lex
-	flex -Phash hasher.lex
+	flex -Phash $<
 
 clicutil.o: clicutil.c clic.tab.h
 
