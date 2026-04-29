@@ -564,7 +564,7 @@
 #include <sys/mman.h>
 #endif
 
-#include "../ncp.h"
+#include "ncp.h"
 
 #ifdef USE_NCPFS
 #define fcntl ncp_fcntl

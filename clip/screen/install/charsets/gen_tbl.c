@@ -29,8 +29,8 @@
 
 #include "../../charset.h"
 #include "../../charset.c"
-#include "../../../coll.h"
-#include "../../../coll.c"
+#include "coll.h"
+#include "coll.c"
 #include "../../screen.h"
 
 /*#define DBG*/
