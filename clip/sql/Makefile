@@ -4,7 +4,7 @@
 CC = gcc
 CLIP = ../clip -I../include -I..
 
-CFLAGS += -I./.. -Wall -Wextra -I../rdd -I../include
+CFLAGS += -I$(CLIP_INCDIR) -I./.. -Wall -Wextra -I../rdd -I../include
 
 DBFSQLLIB = libdbfsql.a
 

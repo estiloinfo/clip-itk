@@ -214,7 +214,7 @@ genlist: genlist.c
 	$(CC) $(CFLAGS) -o genlist $<
 
 $(SQL): sql/*.c sql/*.h sql/*.prg
-	cd sql && $(MAKE)
+	cd sql && $(MAKE) CLIP_INCDIR=$(CLIP_INCDIR)
 
 $(RDDBASE): $(CLIP_INCDIR)/rdd.h rdd/*.h rdd/*.c
 	cd rdd && $(MAKE)
@@ -223,7 +223,7 @@ $(CLASSLIB):
 	cd classes && $(MAKE)
 
 $(CODBLIB):
-	cd codb && $(MAKE) CLIPROOT=`cd ..;pwd`
+	cd codb && $(MAKE) CLIPROOT=`cd ..;pwd` CLIP_INCDIR=$(CLIP_INCDIR)
 
 $(FUNCSLIB):
 	cd funcs && $(MAKE)

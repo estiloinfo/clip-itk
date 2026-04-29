@@ -2,7 +2,7 @@ include ../Makefile.inc
 CLIP	= ../clip
 CLIPFLAGS = -l -a -w -O -n -I . -I .. -I ../include
 CLIPFLAGS2 =
-CFLAGS = -I.. -I../include -I$(CLIPROOT)
+CFLAGS = -I$(CLIP_INCDIR) -I.. -I../include -I$(CLIPROOT)
 CLIPLIBS  =
 OBJS  = codb_list.o codb.o codb_funcs.o codb_oql.o codb_install.o \
 	codb_err.o codb_cache.o codb_cobra.o codb_uni.o list_id.o\
