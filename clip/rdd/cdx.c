@@ -461,7 +461,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <ctype.h>
-#include "../rdd.h"
+#include "rdd.h"
 #include "error.ch"
 #include "./btree.h"
 #include "../clipcfg.h"

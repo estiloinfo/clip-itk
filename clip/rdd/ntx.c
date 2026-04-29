@@ -282,7 +282,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include "../rdd.h"
+#include "rdd.h"
 #include "error.ch"
 #include "./btree.h"
 #ifdef HAVE_MMAN_H

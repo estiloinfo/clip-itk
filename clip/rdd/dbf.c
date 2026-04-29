@@ -556,7 +556,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <limits.h>
-#include "../rdd.h"
+#include "rdd.h"
 #include "./btree.h"
 #include "error.ch"
 #include "dbinfo.ch"

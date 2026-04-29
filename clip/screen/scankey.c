@@ -155,7 +155,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#include "../clip.h"
+#include "clip.h"
 #include "scankey.h"
 
 /* #define DBG  */

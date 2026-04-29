@@ -826,7 +826,7 @@
 #include <string.h>
 #include <limits.h>
 #include <time.h>
-#include "../rdd.h"
+#include "rdd.h"
 #include "coll.h"
 #include "../screen/charset.h"
 #include "error.ch"

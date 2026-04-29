@@ -207,7 +207,7 @@
 */
 #include <string.h>
 #include <limits.h>
-#include "../rdd.h"
+#include "rdd.h"
 #include "error.ch"
 
 #define READLOCK	if((er = rd->vtbl->_rlock(cm,rd,__PROC__))) goto err

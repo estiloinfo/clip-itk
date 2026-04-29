@@ -42,7 +42,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "../clip.h"
+#include "clip.h"
 
 #include "charset.h"
 #include "screen.h"

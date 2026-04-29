@@ -402,7 +402,7 @@
 */
 
 #include <string.h>
-#include "../clip.h"
+#include "clip.h"
 
 #include <stdlib.h>
 #include <unistd.h>
