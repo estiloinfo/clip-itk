@@ -57,7 +57,9 @@ SCRIPTS=add_meta_tag joinlib.sh lowname tconv \
 
 #koitbl.o alttbl.o
 
-HASHSRCS = runtime/cliprt.c runtime/clipdbg.c vm/clipvm.c compiler/clipmain.c runtime/rt.y \
+HASHSRCS = runtime/cliprt.c runtime/cliprt_machine.c runtime/cliprt_params.c \
+	   runtime/cliprt_arrays.c runtime/cliprt_var.c runtime/cliprt_utils.c \
+	   runtime/clipdbg.c vm/clipvm.c compiler/clipmain.c runtime/rt.y \
 	   stdlib/_io.c stdlib/set.c stdlib/_util.c stdlib/_file.c stdlib/_file1.c \
 	   stdlib/_string.c stdlib/_date.c runtime/clipbase.c stdlib/_math.c \
 	   stdlib/_ctools_s.c stdlib/diskutils.c stdlib/_mem.c stdlib/_system.c \
