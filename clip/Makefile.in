@@ -94,14 +94,15 @@ DEFS	=
 # -DSYSTEM=\"$(SYSTEM_NAME)\"
 
 CLIP_SRCDIR := $(shell pwd)
+CLIP_INCDIR := $(CLIP_SRCDIR)/../include
 
-CFLAGS  = -I$(CLIP_SRCDIR) -I$(CLIP_SRCDIR)/include \
+CFLAGS  = -I$(CLIP_INCDIR) -I$(CLIP_SRCDIR) -I$(CLIP_SRCDIR)/include \
           -I$(CLIP_SRCDIR)/compiler -I$(CLIP_SRCDIR)/vm \
           -I$(CLIP_SRCDIR)/runtime -I$(CLIP_SRCDIR)/stdlib \
           -I$(CLIP_SRCDIR)/common -I$(CLIP_SRCDIR)/i18n \
           -I$(CLIP_SRCDIR)/platform \
           $(C_FLAGS) $(ADD_CFLAGS) $(DEFS) $(MEMDBGFLAGS)
-BCFLAGS = -I$(CLIP_SRCDIR) -I$(CLIP_SRCDIR)/include \
+BCFLAGS = -I$(CLIP_INCDIR) -I$(CLIP_SRCDIR) -I$(CLIP_SRCDIR)/include \
           -I$(CLIP_SRCDIR)/compiler -I$(CLIP_SRCDIR)/vm \
           -I$(CLIP_SRCDIR)/runtime -I$(CLIP_SRCDIR)/stdlib \
           -I$(CLIP_SRCDIR)/common -I$(CLIP_SRCDIR)/i18n \
@@ -215,7 +216,7 @@ genlist: genlist.c
 $(SQL): sql/*.c sql/*.h sql/*.prg
 	cd sql && $(MAKE)
 
-$(RDDBASE): rdd.h rdd/*.h rdd/*.c
+$(RDDBASE): $(CLIP_INCDIR)/rdd.h rdd/*.h rdd/*.c
 	cd rdd && $(MAKE)
 
 $(CLASSLIB):
@@ -414,8 +415,10 @@ inst_codb:
 	cd codb && tar cf - codb.ch codbcfg.ch codb_dbf.ch | (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
 
 inst_ch: $(INST_MEMDEBUG_H)
-	tar cf - clip.h clipcfg.h common/hash.h Makefile.inc Makefile.tdoc clipcfg.sh screen/charset.h \
+	tar cf - clipcfg.h common/hash.h Makefile.inc Makefile.tdoc clipcfg.sh screen/charset.h \
 		platform/_win32.h \
+		| (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
+	tar -C $(CLIP_INCDIR) -cf - clip.h extend.h rdd.h clitypes.h const.h \
 		| (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
 	cd rdd && tar cf - btree.h | (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
 	cd sql && tar cf - *.h | (cd $(DESTDIR)$(CLIPROOT)/include && tar xf -)
