@@ -41,7 +41,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
-#include "../clip.h"
+#include "clip.h"
 
 #ifdef unix
 	#ifndef _WIN32
@@ -63,7 +63,7 @@
 
 #endif
 
-#include "../clip.h"
+#include "clip.h"
 #include "tcaps.h"
 
 /* max length of termcap entry */
