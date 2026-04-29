@@ -14,17 +14,17 @@ $(LIB): $(OBJS)
 	rm -f $(LIB)
 	../clip_makelib $(LIB) $(OBJS) && ranlib $(LIB)
 
-rddclip.o:	rddclip.c ../rdd.h
-rdd.o:		rdd.c ../rdd.h
-dbf.o:		dbf.c ../rdd.h
-ntx.o:		ntx.c ../rdd.h
-cdx.o:		cdx.c ../rdd.h
-dbt.o:		dbt.c ../rdd.h
-fpt.o:		fpt.c ../rdd.h
-rushmore.o:	rushmore.c ../rdd.h
+rddclip.o:	rddclip.c ../../include/rdd.h
+rdd.o:		rdd.c ../../include/rdd.h
+dbf.o:		dbf.c ../../include/rdd.h
+ntx.o:		ntx.c ../../include/rdd.h
+cdx.o:		cdx.c ../../include/rdd.h
+dbt.o:		dbt.c ../../include/rdd.h
+fpt.o:		fpt.c ../../include/rdd.h
+rushmore.o:	rushmore.c ../../include/rdd.h
 btree.o:	btree.c btree.h
-six.o:		six.c ../rdd.h ../include/six.ch
-hiper.o:	hiper.c ../rdd.h btree.h
+six.o:		six.c ../../include/rdd.h ../include/six.ch
+hiper.o:	hiper.c ../../include/rdd.h btree.h
 
 test: test.prg rddclip.o rdd.o dbf.o ntx.o cdx.o dbt.o fpt.o rushmore.o btree.o six.o hiper.o ../clipbase.h ../clipbase.c ../libclip.a
 	clip -e -R test.prg
