@@ -24,9 +24,9 @@
 #define NEW(typ) calloc(sizeof(typ),1)
 
 #include <setjmp.h>
-#include "../list.h"
-#include "../coll.h"
-#include "../hash.h"
+#include "../common/list.h"
+#include "../common/coll.h"
+#include "../common/hash.h"
 
 
 

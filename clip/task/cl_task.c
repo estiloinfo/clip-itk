@@ -121,13 +121,13 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#include "../list.h"
-#include "../coll.h"
-#include "../hash.h"
+#include "../common/list.h"
+#include "../common/coll.h"
+#include "../common/hash.h"
 
 #include "cl_cfg.h"
 #ifdef OS_MINGW
-#include "../_win32.h"
+#include "../platform/_win32.h"
 #else
 #include <sys/times.h>
 #endif
