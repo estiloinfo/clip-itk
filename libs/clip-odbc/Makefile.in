@@ -37,7 +37,7 @@ odbc.o: odbc.prg odbc.ch
 
 install:
 	$(CLIPROOT)/bin/clip_cp $(TARGET) $(DESTDIR)$(CLIPROOT)/lib
-	$(CLIPROOT)/bin/clip_cp $(TARGET1) $(DESTDIR)$(CLIPROOT)/lib
+	[ "$(LIBOOB)" = '' ] || $(CLIPROOT)/bin/clip_cp $(TARGET1) $(DESTDIR)$(CLIPROOT)/lib
 	#[ "$(TARGET)" = "$(RTARGET)" ] || cp $(RTARGET) $(DESTDIR)$(CLIPROOT)/lib
 	#[ "$(TARGET1)" = "$(RTARGET1)" ] || cp $(RTARGET1) $(DESTDIR)$(CLIPROOT)/lib
 	mkdir -p $(DESTDIR)$(CLIPROOT)/doc/clip-odbc
