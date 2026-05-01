@@ -2,34 +2,45 @@
 
 make clean
 ./cl_conf
+
+# Try GNU Pth
 cp Makefile.pth Makefile
-make pth_tst
+make pth_tst >/dev/null 2>&1
 ./pth_tst >/dev/null 2>&1
-PTH_ERR=$?
-if [ "$PTH_ERR" = 0 ]
+if [ $? = 0 ]
 then
     echo Library PTH detected. CLIP will use it.
     echo USE_PTH=yes >USE_PTH
-#    make clean
     exit 0
 fi
 rm -f USE_PTH pth_tst
-#make clean
+
+# Try nPth
+cp Makefile.npth Makefile
+make npth_tst >/dev/null 2>&1
+./npth_tst >/dev/null 2>&1
+if [ $? = 0 ]
+then
+    echo Library nPth detected. CLIP will use it.
+    echo USE_NPTH=yes >USE_NPTH
+    exit 0
+fi
+rm -f USE_NPTH npth_tst
+
+# Try CL (setjmp-based, no external library)
 ./cl_conf
 cp Makefile.cl Makefile
-make cl_tst
+make cl_tst >/dev/null 2>&1
 ./cl_tst >/dev/null 2>&1
-CL_ERR=$?
-if [ "$CL_ERR" = 0 ]
+if [ $? = 0 ]
 then
     echo Library CL detected. CLIP will use it.
     echo USE_CL=yes >USE_CL
-    #make clean
     exit 0
 fi
 rm -f USE_CL cl_tst
-echo Warning:Workable library for tasks not detected.
-echo Please install packages libpth2, libpth-dev
-#make clean
+
+echo Warning: No workable library for tasks detected.
+echo Please install libnpth0-dev or libpth-dev
 exit 1
 

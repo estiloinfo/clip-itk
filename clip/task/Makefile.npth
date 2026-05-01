@@ -1,0 +1,25 @@
+CC= gcc
+CFLAGS = -O -g -Wall -Wextra -fPIC -DUSE_NPTH
+NPTH_LIBS= -lnpth -lpthread
+NPTH_TEST= npth_tst
+LIBOBJS = pth_task.o
+LIB = task.a
+
+all: $(LIB)
+
+$(LIB): $(LIBOBJS)
+	rm -f $(LIB)
+	../clip_makelib $(LIB) $(LIBOBJS)
+	ranlib $(LIB)
+
+pth_task.o: pth_task.c pth_compat.h task.h
+	$(CC) $(CFLAGS) -c pth_task.c -o pth_task.o
+
+npth_tst: npth_tst.c
+	$(CC) -O -g npth_tst.c -o npth_tst $(NPTH_LIBS)
+
+clean:
+	cp Makefile.empty Makefile
+	rm -f $(NPTH_TEST) task_tst
+	rm -f USE*
+	rm -f *.o *.bak

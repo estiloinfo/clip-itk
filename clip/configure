@@ -381,31 +381,37 @@ else
 	echo "NCURSES-DEV: Installed" >> ${LOG}
 fi
 
-find /usr/include -iname pth.h | grep pth.h
-if [ $? = 0 ]
+PTH_FOUND=0
+if find /usr/include -iname pth.h 2>/dev/null | grep -q pth.h
 then
+	PTH_FOUND=1
+	PTH_TYPE=pth
+elif find /usr/include -iname npth.h 2>/dev/null | grep -q npth.h
+then
+	PTH_FOUND=1
+	PTH_TYPE=npth
+fi
+
+if [ $PTH_FOUND = 1 ]
+then
+	export PTH_TYPE
 	cd task
 	./configure
-	#	make clean std_tst >/dev/null 2>&1
 	if [ $? = 0 ]
 	then
-		echo "PTH-DEV: Installed" >>${LOG}
+		echo "PTH-DEV: Installed ($PTH_TYPE)" >> ${LOG}
 		USE_TASKS=yes
 	else
 		echo '*******************************************' >> ${LOG}
 		echo 'Error: Task dont work' >> ${LOG}
 		exit 1
-
 	fi
 	cd ..
 else
 	USE_TASKS=no
 	echo '*******************************************' >> ${LOG}
-	echo 'Warning: libpth-dev package does not installed' >> ${LOG}
-	echo 'Warning: system do not have installed PTH development' >> ${LOG}
-	echo 'Warning: cliplib compilation may have a problems' >> ${LOG}
-	exit 1
-	
+	echo 'Warning: no pth/npth library found' >> ${LOG}
+	echo 'Warning: cliplib task support disabled' >> ${LOG}
 fi
 
 msgfmt -V >/dev/null 2>&1
@@ -423,6 +429,10 @@ fi
 if [ "$USE_TASKS" = yes -a -f task/USE_PTH ]
 then
     ADDLIBS="$ADDLIBS -lpth"
+fi
+if [ "$USE_TASKS" = yes -a -f task/USE_NPTH ]
+then
+    ADDLIBS="$ADDLIBS -lnpth -lpthread"
 fi
 
 

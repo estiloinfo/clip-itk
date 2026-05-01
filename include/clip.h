@@ -2356,6 +2356,7 @@ int _clip_translate_charset(char *p1, char *p2, unsigned char *str
 #ifdef USE_TASKS
 	#define select(p1,p2,p3,p4,p5) clip_task_select_if(p1,p2,p3,p4,p5)
 	int clip_task_select_if(int,void*,void*,void*,void*);
+	void Task_INIT(void);
 #endif
 
 void _clip_init_localvars(ClipMachine *mp, ClipVarFrame **plocalvars, int num);

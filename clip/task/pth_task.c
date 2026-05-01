@@ -38,7 +38,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef USE_NPTH
+#include "pth_compat.h"
+#else
 #include <pth.h>
+#endif
 #include "cl_cfg.h"
 #include "task.h"
 #include "task2.h"
@@ -142,8 +146,13 @@ seach_task_in_list(List *list, pth_t ref)
 	for (r = first_List(list); r; r = next_List(list))
 	{
 		tp = (Task*)list->current;
+#ifdef USE_NPTH
+		ptask = PTH_T_LOAD(tp->ref);
+		if (PTH_T_EQ(ptask, ref))
+#else
 		ptask = tp->ref;
 		if ( ptask == ref)
+#endif
 		{
 			ret = (Task *) tp;
 			break;
@@ -330,12 +339,20 @@ Task_new(const char *name, long stacksize, void *data
 	pth_attr_set(attr, PTH_ATTR_STACK_SIZE, (unsigned int)stacksize);
 	ptask = pth_spawn(attr, task_pth_run, task);
 	pth_attr_destroy(attr);
+#ifdef USE_NPTH
+	if (PTH_T_IS_NULL(ptask))
+#else
 	if (ptask == NULL)
+#endif
 	{
 		free(task);
 		return NULL;
 	}
+#ifdef USE_NPTH
+	task->ref = PTH_T_STORE(ptask);
+#else
 	task->ref = (void *)ptask;
+#endif
 
 #ifdef _LDEBUG
 	printf("	open ptask=%p,task=%p,name=%s,%p\n",(void*)ptask,(void*)task,task->name,task->name);
@@ -366,8 +383,13 @@ task_pth_stop(List *list, pth_t _ptask)
 	for (r = first_List(list); r; r = next_List(list))
 	{
 		tp = (Task*)list->current;
+#ifdef USE_NPTH
+		ptask = PTH_T_LOAD(tp->ref);
+		if (PTH_T_EQ(_ptask, ptask))
+#else
 		ptask = tp->ref;
 		if ( _ptask == ptask)
+#endif
 			continue;
 		pth_suspend(ptask);
 	}
@@ -411,7 +433,11 @@ task_pth_start(List *list)
 	for (r = first_List(list); r; r = next_List(list))
 	{
 		tp = (Task*)list->current;
+#ifdef USE_NPTH
+		ptask = PTH_T_LOAD(tp->ref);
+#else
 		ptask = tp->ref;
+#endif
 		pth_resume(ptask);
 	}
 #ifdef _LDEBUG
