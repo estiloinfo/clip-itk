@@ -1,0 +1,54 @@
+#  GNU make makefile
+#
+
+ifndef CLIPROOT
+	CLIPROOT:=$(shell cd ../../../cliproot 2>/dev/null && pwd || echo /usr/local/clip)
+endif
+-include $(CLIPROOT)/include/Makefile.inc
+
+LIBODBC=-lodbc $(C_LIBS)
+# Note: below we check if LIBOOB is empty when library is missed
+LIBOOB=
+
+TARGET=libclip-odbc$(DLLSUFF)
+ATARGET=libclip-odbc.a
+RTARGET=libclip-odbc$(DLLREALSUFF)
+TARGET1=libclip-oob$(DLLSUFF)
+RTARGET1=libclip-oob$(DLLREALSUFF)
+OBJS=odbc_clip.o odbc.o
+CFLAGS=-fPIC $(C_FLAGS)
+
+all:  $(TARGET) $(TARGET1) $(ATARGET)
+
+$(TARGET): $(OBJS)
+	$(CLIPROOT)/bin/clip_makeslib $(TARGET) $(OBJS) $(LIBODBC)
+
+$(ATARGET): $(OBJS)
+	$(CLIPROOT)/bin/clip_makelib $(ATARGET) $(OBJS) $(LIBODBC)
+
+$(TARGET1): $(OBJS)
+	[ "$(LIBOOB)" = '' ] || $(CLIPROOT)/bin/clip_makeslib $(TARGET1) $(OBJS) $(LIBOOB) $(C_LIBS)
+
+odbc_clip.o: odbc_clip.c odbc.ch
+	$(CC) $(CFLAGS) -c odbc_clip.c
+
+odbc.o: odbc.prg odbc.ch
+	$(CLIPROOT)/bin/clip odbc.prg
+
+install:
+	$(CLIPROOT)/bin/clip_cp $(TARGET) $(DESTDIR)$(CLIPROOT)/lib
+	[ "$(LIBOOB)" = '' ] || $(CLIPROOT)/bin/clip_cp $(TARGET1) $(DESTDIR)$(CLIPROOT)/lib
+	#[ "$(TARGET)" = "$(RTARGET)" ] || cp $(RTARGET) $(DESTDIR)$(CLIPROOT)/lib
+	#[ "$(TARGET1)" = "$(RTARGET1)" ] || cp $(RTARGET1) $(DESTDIR)$(CLIPROOT)/lib
+	mkdir -p $(DESTDIR)$(CLIPROOT)/doc/clip-odbc
+	cp *.html $(DESTDIR)$(CLIPROOT)/doc/clip-odbc
+	cp odbc.ch $(DESTDIR)$(CLIPROOT)/include
+	mkdir -p $(DESTDIR)$(CLIPROOT)/doc/example/clip-odbc
+	cp -R example/* $(DESTDIR)$(CLIPROOT)/doc/example/clip-odbc/
+
+clean:
+	rm -rf *.o odbc.c *.s *.bak *.a *.so *.dll *.exe odbc_ref.c *.ex *.nm
+
+distclean: clean
+	rm -f Makefile
+
