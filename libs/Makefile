@@ -5,10 +5,10 @@ endif
 -include $(CLIPROOT)/include/Makefile.inc
 
 dirs = clip-gzip clip-bzip2 clip-crypto clip-gd clip-fcgi \
-       clip-gtk2 \
        clip-mysql clip-postgres clip-oracle clip-interbase clip-odbc \
        clip-com clip-oasis clip-rtf clip-r2d2 \
-       clip-xml clip-glade2 clip-ui clip-postscript
+       clip-xml clip-ui clip-postscript
+#      clip-gtk2 clip-glade2  (GTK2 removed from Debian 13+)
 
 #clip-cti  clip-fw clip-gtk clip-gtkextra
 
