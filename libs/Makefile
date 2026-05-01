@@ -4,11 +4,15 @@ endif
 
 -include $(CLIPROOT)/include/Makefile.inc
 
-dirs = clip-gzip clip-bzip2 clip-crypto clip-gd clip-fcgi \
-       clip-mysql clip-postgres clip-oracle clip-interbase clip-odbc \
+dirs = clip-gzip clip-bzip2 clip-crypto clip-fcgi \
+       clip-mysql clip-postgres clip-odbc \
        clip-com clip-oasis clip-rtf clip-r2d2 \
        clip-xml clip-ui clip-postscript
-#      clip-gtk2 clip-glade2  (GTK2 removed from Debian 13+)
+#      clip-gd         (no libgd-dev available)
+#      clip-oracle     (proprietary, no dev headers available)
+#      clip-interbase  (no dev headers available)
+#      clip-gtk2       (GTK2 removed from Debian 13+)
+#      clip-glade2     (GTK2 removed from Debian 13+)
 
 #clip-cti  clip-fw clip-gtk clip-gtkextra
 
