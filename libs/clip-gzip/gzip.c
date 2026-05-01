@@ -39,7 +39,7 @@ static void
 destroy_gzip_file(void *file)
 {
 	if (file != NULL)
-		gzclose((gzFile *) file);
+		gzclose((gzFile) file);
 }
 
 int
@@ -151,7 +151,7 @@ clip_GZIPCLOSE(ClipMachine * mp)
 	int fd = _clip_parni(mp, 1);
 	int ret = -1, *err = _clip_fetch_item(mp, HASH_ferror);
 
-	gz = (gzFile *) _clip_fetch_c_item(mp, fd, _C_ITEM_TYPE_FILE);
+	gz = (gzFile) _clip_fetch_c_item(mp, fd, _C_ITEM_TYPE_FILE);
 
 	if (gz == NULL)
 	{
