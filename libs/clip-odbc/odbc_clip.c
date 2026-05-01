@@ -442,7 +442,7 @@ int odbc_prepare(ClipMachine* cm,SQLCONN* c,char* sql){
 int odbc_command(ClipMachine* cm,SQLSTMT* s,ClipVar* ap){
 	ODBC_STMT* stmt = (ODBC_STMT*)s;
 	SQLRETURN er;
-	SDWORD count;
+	SQLLEN count;
 
 	odbc_bindpars(stmt,ap);
 	if((er = SQLAllocStmt(stmt->conn->conn,&stmt->hstmt))) goto err;

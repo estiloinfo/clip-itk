@@ -7,7 +7,8 @@ endif
 dirs = clip-gzip clip-bzip2 clip-crypto clip-fcgi \
        clip-mysql clip-postgres clip-odbc \
        clip-com clip-oasis clip-rtf clip-r2d2 \
-       clip-xml clip-ui clip-postscript
+       clip-xml clip-postscript
+#      clip-ui         (requires clip-xml installed as a lib)
 #      clip-gd         (no libgd-dev available)
 #      clip-oracle     (proprietary, no dev headers available)
 #      clip-interbase  (no dev headers available)
