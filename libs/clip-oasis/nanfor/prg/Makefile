@@ -1,4 +1,4 @@
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 
 CLIP	= $(CLIPROOT)/bin/clip
 CLIPFLAGS = -a -O -n -I .. -I ../include

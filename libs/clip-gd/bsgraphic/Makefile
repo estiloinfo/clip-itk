@@ -2,7 +2,7 @@ CLIP	= $(CLIPROOT)/bin/clip
 CLIPFLAGS = -a -O -b -w
 
 ifdef CLIPROOT
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 endif
 
 GDLIB  =

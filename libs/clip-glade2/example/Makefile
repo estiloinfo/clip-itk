@@ -7,7 +7,7 @@ endif
 
 CCLIP=$(CLIPROOT)/bin/clip
 
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 
 PRGFLAGS=-w -l
 

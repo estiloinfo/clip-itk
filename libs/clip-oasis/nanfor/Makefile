@@ -1,4 +1,4 @@
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 
 TARGET=libclip-nanfor$(DLLSUFF)
 RTARGET=libclip-nanfor$(DLLREALSUFF)

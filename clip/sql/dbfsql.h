@@ -1,4 +1,4 @@
-#include "hash.h"
+#include "common/hash.h"
 #include "btree.h"
 
 #ifndef DBFSQL_H

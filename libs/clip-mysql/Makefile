@@ -2,9 +2,9 @@
 #
 
 ifndef CLIPROOT
-	CLIPROOT=$(shell cd ../../../; pwd)/cliproot
+	CLIPROOT:=$(shell cd ../../../cliproot 2>/dev/null && pwd || echo /usr/local/clip)
 endif
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 
 TARGET=libclip-mysql$(DLLSUFF)
 ATARGET=libclip-mysql.a

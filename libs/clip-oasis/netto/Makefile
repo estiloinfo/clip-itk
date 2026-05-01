@@ -1,4 +1,4 @@
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 
 TARGET=libclip-netto$(DLLSUFF)
 RTARGET=libclip-netto$(DLLREALSUFF)

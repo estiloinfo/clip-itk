@@ -4,10 +4,10 @@
 # Copyright (C) 2006, ITK
 # Web: http://www.itk.ru
 ifndef CLIPROOT
-	CLIPROOT=$(shell cd ../../../../; pwd)/cliproot
+	CLIPROOT:=$(shell cd ../../../../cliproot 2>/dev/null && pwd || echo /usr/local/clip)
 endif
 
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 CLIPINCLUDE = -I$(CLIPROOT)/include
 CLIP = $(CLIPROOT)/bin/clip
 C_FLAGS=-g

@@ -2,10 +2,10 @@
 # Copyright (C) 2003-2006, E/AS Software Foundation
 # Web: http://eas.lrn.ru
 ifndef CLIPROOT
-	CLIPROOT=$(shell cd ../../../../; pwd)/cliproot
+	CLIPROOT:=$(shell cd ../../../../cliproot 2>/dev/null && pwd || echo /usr/local/clip)
 endif
 
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 CLIPINCLUDE = -I$(CLIPROOT)/include
 CLIP = $(CLIPROOT)/bin/clip
 

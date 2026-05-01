@@ -9,13 +9,18 @@ LIBS = -lpam
 CC = gcc
 CFLAGS = -O
 
-all: pam-auth
-	 #sudo ./make_mod.sh; if [ ! -x pam-auth ]  ; then rm -f pam-auth ; fi
-	 #./make_mod.sh; if [ ! -x pam-auth ]  ; then rm -f pam-auth ; fi
-	 #./make_mod.sh; if [ $? != 0 ] ; then rm -f pam-auth ; fi
+all:
+	@if find /usr/include -iname pam_appl.h 2>/dev/null | grep -q pam_appl.h; then \
+		$(MAKE) pam-auth; \
+	else \
+		echo '*******************************************'; \
+		echo 'Warning: libpam0g-dev package not installed'; \
+		echo 'Warning: pam-auth compilation skipped'; \
+		echo '*******************************************'; \
+	fi
 
 pam-auth: pam-auth.c
-	$(CC) $(CFLAGS) -o pam-auth pam-auth.c $(LIBS) || exit 0
+	$(CC) $(CFLAGS) -o pam-auth pam-auth.c $(LIBS)
 
 clean:
 	rm -f pam-auth *.bak *.o

@@ -1,12 +1,12 @@
 ifndef CLIPROOT
-	CLIPROOT=$(shell cd ../../../; pwd)/cliproot
+	CLIPROOT:=$(shell cd ../../../cliproot 2>/dev/null && pwd || echo /usr/local/clip)
 endif
 
 ifdef CLIPROOT
 	CLIP = $(CLIPROOT)/bin/clip
 	CLIP_MAKESLIB = $(CLIPROOT)/bin/clip_makeslib
 	CLIPFLAGS = -nwl -I./include
-	include $(CLIPROOT)/include/Makefile.inc
+	-include $(CLIPROOT)/include/Makefile.inc
 else
 	CLIP = clip
 	CLIP_MAKESLIB = clip_makeslib

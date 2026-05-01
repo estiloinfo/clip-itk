@@ -4,7 +4,7 @@ ifndef CLIPROOT
 	CLIPROOT=/usr/local/clip
 endif
 
-include $(CLIPROOT)/include/Makefile.inc
+-include $(CLIPROOT)/include/Makefile.inc
 
 # Check libglade version.
 LIBGLADE_MIN=2.4.2
