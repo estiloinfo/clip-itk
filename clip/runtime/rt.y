@@ -398,7 +398,6 @@ typedef struct Parser
 #undef __GNUC__
 #define POS (PARSER->out->ptr-PARSER->out->buf)
 
-int rtlex();
 void rt_error(Parser *parser, char *fmt,...);
 #define rterror(msg,...) rt_error( PARSER, "%s", msg);
 static int installName(Parser *parser, long hash, int memvar, int lval, long area, int fld);
@@ -466,6 +465,8 @@ static void add_deep(Function *fp, int no);
 %right MINUS
 %left ':' '['
 %left RPTR
+
+%code { int rtlex(YYSTYPE*, void*); }
 
 %%
 
@@ -1062,10 +1063,9 @@ find_rptr(Parser *pp)
 }
 
 int
-rtlex(yylvalp, pp)
-	YYSTYPE *yylvalp;
-	Parser *pp;
+rtlex(YYSTYPE *yylvalp, void *_pp)
 {
+	Parser *pp = (Parser*)_pp;
 	int ch, next, tok=0, quot=0;
 	char *beg=0;
 
