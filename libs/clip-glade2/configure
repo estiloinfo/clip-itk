@@ -1,8 +1,0 @@
-#!/bin/sh
-if [ $1 = "install" ]; then
-	echo '    Warning: lib not installed' >> ${LOG}
-else
-	echo '    Warning: Compilation skipped' >> ${LOG}
-	echo '    Remove cliplibs/clip-glade/configure to try compilation' >> ${LOG}
-fi
-exit 1
