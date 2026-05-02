@@ -931,7 +931,7 @@ param_list:  { $$.count=0; $$.vect=0; }
 		}
 	| param_list ',' NAME {
 			int i = ++ $$.count;
-			$$.vect=M_REALLOC(long,$$.vect,i);
+			M_REALLOC(long,$$.vect,i);
 			$$.vect[i-1] = $3;
 			for(i=0;i<$$.count-1;++i)
 				if ($$.vect[i]==$3)
