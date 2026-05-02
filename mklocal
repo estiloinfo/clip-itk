@@ -145,7 +145,7 @@ cd $pwd
 #if [ -z "$noprg" ]
 #then
 
-	cp -R prg/include ${DESTDIR}${CLIPROOT}/
+	[ -d prg/include ] && cp -R prg/include ${DESTDIR}${CLIPROOT}/
 	cp -R prg/locale.po ${DESTDIR}${CLIPROOT}/
 
 #cd  prg || exit 1
