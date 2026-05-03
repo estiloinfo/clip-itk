@@ -62,7 +62,7 @@ for ii=1 to len(par)
 	lang := .f.
 	lEnd := .t.
 	do while !fileeof(fsrc)
-		str := alltrim(filegetstr(fsrc))
+		str := alltrim(filegetstr(fsrc, 65536))
 		s := upper(str)
 		if s == "$ABOUTCATEG$"
 			str := parseCateg(fsrc, categ, alang)
@@ -282,12 +282,6 @@ local str, newstr, l, i, j, s, tag, reg
 
 	newstr := strtran(newstr, chr(27), " ")
 	newstr := strtran(newstr, chr(28), " ")
-	newstr := strtran(newstr, chr(128), "-")
-	newstr := strtran(newstr, chr(129), "|")
-	newstr := strtran(newstr, chr(132), " ")
-	newstr := strtran(newstr, chr(136), " ")
-	newstr := strtran(newstr, chr(145), " ")
-	newstr := strtran(newstr, chr(148), " ")
 return newstr
 
 
@@ -683,7 +677,7 @@ static function parseArguments(fsrc, fs, alang)
 local str, s, lang:="EN", argname, argdesc:="", x, lpre := .f., llist := .f., litem := .f.
 local instr, j
 	do while !fileeof(fsrc)
-		instr := alltrim(filegetstr(fsrc))
+		instr := alltrim(filegetstr(fsrc, 65536))
 		if !lpre .and. atl("<pre>", lower(instr))>0
 			lpre := .t.
 			str := ""
@@ -794,7 +788,7 @@ static function parseCateg(fsrc, categ, alang)
 local str, s, lang:="EN", cname, cidname, descr := {}, lDesc := .f., lSumm := .f., lCn:=.f.
 local summ := {}
 	do while !fileeof(fsrc)
-		str := alltrim(filegetstr(fsrc))
+		str := alltrim(filegetstr(fsrc, 65536))
 		s := upper(str)
 		if s == "$DESCRIPTION$"
 			lDesc := .t.

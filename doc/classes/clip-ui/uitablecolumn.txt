@@ -60,7 +60,7 @@ $LANG_RU$
 	<type>		- Число. Тип значений в столбце. Поддерживаемые типы: <itemizedlist mark="bullet"><listitem><command>TABLE_COLUMN_TEXT</command> &mdash; 
 	текст</listitem><listitem><command>TABLE_COLUMN_CHOICE</command> &mdash; 
 	выбор из отдельного окна</listitem><listitem><command>TABLE_COLUMN_COMBO</command> &mdash; 
-	выбор из выпадающего списка</listitem><istitem><command>TABLE_COLUMN_NUMBER</command> &mdash; 
+	выбор из выпадающего списка</listitem><listitem><command>TABLE_COLUMN_NUMBER</command> &mdash; 
 	число</listitem><listitem><command>TABLE_COLUMN_DATE</command> &mdash; 
 	дата</listitem><listitem><command>TABLE_COLUMN_CHECK</command> &mdash; 
 	флажок</listitem><listitem><command>TABLE_COLUMN_COUNTER</command> &mdash; 

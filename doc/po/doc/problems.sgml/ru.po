@@ -413,7 +413,7 @@ msgstr ""
 "обрабатываете ввод с клавиатуры. При использовании функций и команд "
 "производящих обработку экрана и клавиатуры самостоятельно(<command>PROMPT/"
 "MENU</command>, <command>GET/READ</command>, и т.д.), обрамлять их в "
-"<command>DISPBEGIN()</command> & <command>DISPEND()</command> не надо.\n"
+"<command>DISPBEGIN()</command> &amp; <command>DISPEND()</command> не надо.\n"
 
 #: template/./doc/problems.sgml:218
 msgid ""

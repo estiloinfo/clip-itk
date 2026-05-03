@@ -286,8 +286,8 @@ msgid ""
 "Linux, FreeBSD, OpenBSD, SPARC &amp; x86 Solaris, IBM mainframe with "
 "TurboLinux, Win32 ( with CYGWIN development tools)"
 msgstr ""
-"linux, freebsd, openBsd, SPARC & x86 solaris, IBM mainframe под TurboLinux, "
-"Win32 (с использованием средств разработки CYGWIN)"
+"linux, freebsd, openBsd, SPARC &amp; x86 solaris, IBM mainframe под "
+"TurboLinux, Win32 (с использованием средств разработки CYGWIN)"
 
 #: template/./doc/about.sgml:155
 msgid "TODO list"

@@ -44,7 +44,7 @@ $SYNTAX$
 $ARGUMENTS$
 	<tab>	- <link linkend="classuitab">UITab</link> object. Tab to be added.
 $LANG_RU$
-	<tab<	- Объект класса <link linkend="classuitab">UITab</link>. Добавляемый объект.
+	<tab>	- Объект класса <link linkend="classuitab">UITab</link>. Добавляемый объект.
 $EXAMPLES$
 	oTabs := UITabArea()
 	t1 := UITab('First', 'first')

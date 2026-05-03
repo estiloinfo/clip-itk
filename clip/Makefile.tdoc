@@ -60,14 +60,13 @@ hu_tcharset = iso-8859-2
 es_tcharset = iso-8859-1
 pt_tcharset = iso-8859-1
 
-ifdef USEUTF
+# xsltproc requires UTF-8; override legacy encodings unconditionally
 ru_charset = utf-8
 en_charset = utf-8
 ua_charset = utf-8
 hu_charset = utf-8
 es_charset = utf-8
 pt_charset = utf-8
-endif
 export ru_charset ua_charset en_charset hu_charset es_charset pt_charset
 export ru_tcharset ua_tcharset en_tcharset hu_tcharset es_tcharset pt_tcharset
 

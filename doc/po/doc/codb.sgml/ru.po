@@ -590,8 +590,8 @@ msgstr ""
 #, fuzzy
 msgid "3 - \"Right &amp; Left trim\""
 msgstr ""
-"3 - \"Right & Left trim\", при записи объектов будут удалены  начальные и "
-"конечные пробелы"
+"3 - \"Right &amp; Left trim\", при записи объектов будут удалены  начальные "
+"и конечные пробелы"
 
 #: template/./doc/codb.sgml:260
 msgid "4 - \"Right pad length\""

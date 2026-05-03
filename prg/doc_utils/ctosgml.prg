@@ -59,7 +59,7 @@ for ii=1 to len(par)
 	fsrc := fopen(fname, 0)
 	j := 0
 	do while !fileeof(fsrc)
-		str := alltrim(filegetstr(fsrc))
+		str := alltrim(filegetstr(fsrc, 65536))
 		s := upper(str)
 		if s == "$CLASSNAME$"
 			aadd(fs, ClassObjNew(fname))
@@ -292,12 +292,6 @@ local str, newstr, l, i, j, s, tag, reg
 
 	newstr := strtran(newstr, chr(27), " ")
 	newstr := strtran(newstr, chr(28), " ")
-	newstr := strtran(newstr, chr(128), "-")
-	newstr := strtran(newstr, chr(129), "|")
-	newstr := strtran(newstr, chr(132), " ")
-	newstr := strtran(newstr, chr(136), " ")
-	newstr := strtran(newstr, chr(145), " ")
-	newstr := strtran(newstr, chr(148), " ")
 return newstr
 
 
@@ -674,7 +668,7 @@ static function parseArguments(fsrc, fsx, alang, nMet)
 local str, s, lang:="EN", argname, argdesc:="", x, fs, lCls
 	lCls := iif(nMet == NIL, .t., .f.)
 	do while !fileeof(fsrc)
-		str := alltrim(filegetstr(fsrc))
+		str := alltrim(filegetstr(fsrc, 65536))
 		s := upper(str)
 		if lang == "EN"
 			if lCls

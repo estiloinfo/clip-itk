@@ -20,14 +20,14 @@ $DESCRIPTION$
 
     There are a few HOT Keys while using the Adder:
 
-	   <D>ecimals € change # of decimals
-	   <M>ove     € the Adder from right display to left
-	   <T>ape     € turn the Tape Display On or Off
-	   <S>croll   € the tape display
-	   <DEL> €€€ˆ€€ 1st Clear entry
-		    „€€ 2nd Clear ADDER
-	   <ESC>      € Quit
-	   <F10>      € return a <TOTAL> to the active get
+	   <D>ecimals  change # of decimals
+	   <M>ove      the Adder from right display to left
+	   <T>ape      turn the Tape Display On or Off
+	   <S>croll    the tape display
+	   <DEL>  1st Clear entry
+		     2nd Clear ADDER
+	   <ESC>       Quit
+	   <F10>       return a <TOTAL> to the active get
 
 
     A couple of notes about the adder:

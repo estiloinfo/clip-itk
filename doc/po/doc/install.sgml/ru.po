@@ -141,7 +141,7 @@ msgstr ""
 #: template/./doc/install.sgml:40
 #, fuzzy
 msgid "SRC: Interbase &amp; FireBird client"
-msgstr "SRC: Interbase & FireBird клиент"
+msgstr "SRC: Interbase &amp; FireBird клиент"
 
 #: template/./doc/install.sgml:41
 msgid "clip_gtk.tgz"
@@ -265,7 +265,7 @@ msgstr ""
 #: template/./doc/install.sgml:68
 #, fuzzy
 msgid "SRC: CA_DBU &amp; CA_DBU53 adapted for Clip"
-msgstr "SRC: CA_DBU & CA_DBU53 адаптированные для Clip"
+msgstr "SRC: CA_DBU &amp; CA_DBU53 адаптированные для Clip"
 
 #: template/./doc/install.sgml:69
 msgid "clip_fcgi.tgz"
@@ -362,8 +362,8 @@ msgstr ""
 #, fuzzy
 msgid "SRC: latest fixes and addons for Clip base packages (dev &amp; doc)"
 msgstr ""
-"SRC: последние изменения и добавления для базовых пакетов Clip (dev & doc) в "
-"одном кумулятивном патче"
+"SRC: последние изменения и добавления для базовых пакетов Clip (dev &amp; "
+"doc) в одном кумулятивном патче"
 
 #: template/./doc/install.sgml:91
 #, fuzzy
