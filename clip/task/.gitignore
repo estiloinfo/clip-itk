@@ -1,3 +1,5 @@
 cl_cfg.h
 pth_tst
 USE_PTH
+npth_tst
+USE_NPTH
