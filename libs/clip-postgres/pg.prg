@@ -9,6 +9,7 @@ FUNCTION PG2CLIP(rowset,fieldno)
 	LOCAL ar
 	LOCAL tmp
 	LOCAL I,J,K
+	LOCAL flen,fdec,dot
 
 	IF data == NIL
 		RETURN NIL
@@ -53,6 +54,13 @@ FUNCTION PG2CLIP(rowset,fieldno)
 		CASE PGT_FLOAT8
 			RETURN PG_IN_DOUBLE(rowset,data,dec)
 		CASE PGT_NUMERIC
+			flen := SQLFieldLen(rowset,fieldno)
+			fdec := SQLFieldDec(rowset,fieldno)
+			dot  := 0
+			IF flen == 0 .AND. fdec == 0
+				dot  := AT(".", data)
+				fdec := IF(dot > 0, MIN(LEN(RTRIM(data)) - dot, 14), 0)
+			ENDIF
 			IF PG_ISBINARY(rowset)
 				tmp := BIN2B(SUBSTR(data,1,1))
 				dec := BIN2B(SUBSTR(data,3,1))
@@ -63,10 +71,10 @@ FUNCTION PG2CLIP(rowset,fieldno)
 					J += INT(ASC(SUBSTR(data,I+6,1))%16)*(10**(tmp-1))
 					tmp -= 2
 				NEXT
-				J := SQLSetlendec(J,SQLFieldLen(rowset,fieldno),SQLFieldDec(rowset,fieldno))
+				J := SQLSetlendec(J,flen,fdec)
 				RETURN IF(ASC(SUBSTR(data,6,1))==64,-J,J)
 			ELSE
-				RETURN SQLSetlendec(VAL(data),SQLFieldLen(rowset,fieldno),SQLFieldDec(rowset,fieldno))
+				RETURN SQLSetlendec(VAL(data),flen,fdec)
 			ENDIF
 		CASE PGT_OID8
 			IF PG_ISBINARY(rowset)

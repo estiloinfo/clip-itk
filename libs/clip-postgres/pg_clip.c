@@ -474,8 +474,11 @@ int pg_createrowset(ClipMachine* mp,SQLROWSET* rs,ClipVar* ap,ClipVar* idname,co
 				rowset->fields[i].len = 10;
 				break;
 			case PGT_NUMERIC:
-				rowset->fields[i].len = (mod >> 16);
-				rowset->fields[i].dec = (mod & 0xffff)-4;
+				if(mod != -1){
+					rowset->fields[i].len = (mod >> 16);
+					rowset->fields[i].dec = (mod & 0xffff) - 4;
+				}
+				/* mod==-1: unspecified precision; leave len=0,dec=0 */
 				break;
 			case PGT_DATE:
 				rowset->fields[i].len = 8;
