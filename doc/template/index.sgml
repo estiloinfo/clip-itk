@@ -1,4 +1,6 @@
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.0//EN" [
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY introduction SYSTEM "doc/introduction.sgml">
   <!ENTITY about SYSTEM "doc/about.sgml">
   <!ENTITY license SYSTEM "doc/license.sgml">

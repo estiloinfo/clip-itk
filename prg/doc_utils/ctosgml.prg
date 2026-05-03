@@ -272,8 +272,15 @@ local str, newstr, l, i, j, s, tag, reg
 				endif
 			elseif s== ">"
 				newstr += '&gt;'
-			elseif s== "&" .and. substr(str,2,1) == ' '
-				newstr += '&amp;'
+			elseif s == "&"
+				// Escape & unless it starts a valid XML entity/char reference
+				if ( substr(str,2,1) >= 'a' .and. substr(str,2,1) <= 'z' ) .or. ;
+				   ( substr(str,2,1) >= 'A' .and. substr(str,2,1) <= 'Z' ) .or. ;
+				   substr(str,2,1) == '#' .or. substr(str,2,1) == '_'
+					newstr += '&'
+				else
+					newstr += '&amp;'
+				endif
 			else
 				newstr += s
 			endif
@@ -300,7 +307,7 @@ local i, j, a, str, lStr, arr, lf, val
 
 	qout( "Write to: "+fname+" function:"+fs:CLASSNAME)
 
-	str := '<refentry id="class'+fs:SGMLID+'">&\<refmeta><refentrytitle>Class '+fs:CLASSNAME+' </refentrytitle>&\n</refmeta>&\n'
+	str := '<refentry id="class'+fs:SGMLID+'">&\n<refmeta><refentrytitle>Class '+fs:CLASSNAME+' </refentrytitle>&\n</refmeta>&\n'
 	fwrite(fsgml, str, len(str))
 
 	str := '<refnamediv>&\n<refname>'+fs:CLASSNAME+' </refname>&\n'
@@ -516,7 +523,7 @@ local i, j, key, val, str, a, x, ii, fs, fsl
 	for ii=1 to ab_met:len()
 		key := ab_met:getKey(ii)
 		x := ab_met:getData(ii)
-		str := '<refsect2>&\n<title><anchor id="class-'+clname+'-'+key+'">Method '+clname+':'+key+'()</title>&\n'
+		str := '<refsect2>&\n<title><anchor id="class-'+clname+'-'+key+'"/>Method '+clname+':'+key+'()</title>&\n'
 		fwrite(fsgml, str, len(str))
 
 		str := '<programlisting><![CDATA['+fs[x]:SYNTAX+']]></programlisting>&\n'
@@ -547,7 +554,7 @@ local i, j, key, val, str, a, x, ii, fs, fsl
 		str += '&\n</para>&\n'
 		fwrite(fsgml, str, len(str))
 
-		str := '<informaltable pgwide="1" frame="none" role="params"><tgroup cols="2">&\n<colspec colwidth="2*">&\n<colspec colwidth="8*">&\n<tbody>&\n'
+		str := '<informaltable pgwide="1" frame="none" role="params"><tgroup cols="2">&\n<colspec colwidth="2*"/>&\n<colspec colwidth="8*"/>&\n<tbody>&\n'
 		if lang != "EN" .and. !empty(fsl[x]:ARGS)
 			for i=1 to len(fsl[x]:ARGS)
 				if empty(fsl[x]:ARGS[i][2])

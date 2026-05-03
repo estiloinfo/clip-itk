@@ -312,25 +312,25 @@ find_msg(char *id)
                                 {
                                 	static char *obuf = 0;
                                         static int obuflen = 0;
-                                	int il, ol, l;
+                                	size_t il, ol, l;
                                         char *is, *os;
                                 	il = strlen(ep->translated);
-					if (obuflen< il*4)
+					if ((int)(il*4) > obuflen)
                                         {
-                                        	obuflen = il * 4;
+                                        	obuflen = (int)(il * 4);
                                                 obuf = (char*) realloc(obuf, obuflen);
                                         }
 
 
                                 	is = ep->translated;
                                         os = obuf;
-                                        ol = obuflen;
+                                        ol = (size_t)obuflen;
 #ifdef OS_CYGWIN
                                 	iconv(fp->cd, (const char **)&is, &il , &os, &ol);
 #else
-                                	iconv(fp->cd, &is, (size_t *)(&il) , &os, (size_t *)&(ol));
+                                	iconv(fp->cd, &is, &il, &os, &ol);
 #endif
-                                        l = obuflen - ol;
+                                        l = (size_t)obuflen - ol;
                                         obuf[l] = 0;
                                         return obuf;
                                 }

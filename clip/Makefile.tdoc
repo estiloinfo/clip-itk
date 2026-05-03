@@ -144,17 +144,19 @@ sgml: extract merge
 #	done
 
 
+DOCBOOK_XSL ?= /usr/share/sgml/docbook/xsl-ns-stylesheets/html/chunk.xsl
+
 html: sgml clean-html
 	for L in $(LANGS); \
 	do \
-		eval charset=\$$$${L}_charset ;\
-		test -n "$$charset" || charset="utf-8" ;\
-		export SP_ENCODING=$$charset;\
-		echo $$charset;\
 		mkdir -p html/$$L ;\
-		out=`cd  html/$$L; pwd` ;\
-		(cd sgml/$$L ;  docbook2html $(DOCBOOK_OPTS) -o $$out $(MAIN).sgml) ;\
-		find html/$$L -name '*.html' |xargs $(BIN)/add_meta_tag $$charset;\
+		out=`cd html/$$L; pwd` ;\
+		(cd sgml/$$L; xsltproc --nonet \
+			--stringparam chunker.output.encoding UTF-8 \
+			--stringparam use.id.as.filename 1 \
+			-o $$out/ \
+			$(DOCBOOK_XSL) \
+			$(MAIN).sgml) ;\
 	done
 
 ps: sgml clean-ps

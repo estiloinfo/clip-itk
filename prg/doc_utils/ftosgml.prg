@@ -262,8 +262,15 @@ local str, newstr, l, i, j, s, tag, reg
 				endif
 			elseif s== ">"
 				newstr += '&gt;'
-			elseif s== "&" .and. substr(str,2,1) == ' '
-				newstr += '&amp;'
+			elseif s == "&"
+				// Escape & unless it starts a valid XML entity/char reference
+				if ( substr(str,2,1) >= 'a' .and. substr(str,2,1) <= 'z' ) .or. ;
+				   ( substr(str,2,1) >= 'A' .and. substr(str,2,1) <= 'Z' ) .or. ;
+				   substr(str,2,1) == '#' .or. substr(str,2,1) == '_'
+					newstr += '&'
+				else
+					newstr += '&amp;'
+				endif
 			else
 				newstr += s
 			endif
@@ -290,7 +297,7 @@ local i, j, a, str, lStr, arr, lf
 
 	qout( "Write to: "+fname+" function:"+fs:FUNCNAME)
 
-	str := '<refsect2>&\n<title><anchor id="function'+fs:SGMLID+'">Function '+fs:FUNCNAME+' </title>&\n'
+	str := '<refsect2>&\n<title><anchor id="function'+fs:SGMLID+'"/>Function '+fs:FUNCNAME+' </title>&\n'
 	fwrite(fsgml, str, len(str))
 
 	if !empty(fs:LASTDATE)
@@ -339,7 +346,7 @@ local i, j, a, str, lStr, arr, lf
 
 	fwrite(fsgml, str, len(str))
 
-	str := '<informaltable pgwide="1" frame="none" role="params"><tgroup cols="2">&\n<colspec colwidth="2*">&\n<colspec colwidth="8*">&\n<tbody>&\n'
+	str := '<informaltable pgwide="1" frame="none" role="params"><tgroup cols="2">&\n<colspec colwidth="2*"/>&\n<colspec colwidth="8*"/>&\n<tbody>&\n'
 	if lang != "EN" .and. (lang $ fs) .and. !empty(fs[lang]:ARGS)
 		for i=1 to len(fs[lang]:ARGS)
 			if empty(fs[lang]:ARGS[i][2])
