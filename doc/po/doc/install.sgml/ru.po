@@ -7,6 +7,7 @@ msgstr ""
 "PO-Revision-Date: 2002-11-11 16:51+0300\n"
 "Last-Translator: Guest007 <guest007@vbg.herzen.spb.ru>\n"
 "Language-Team:  <ru@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -370,8 +371,8 @@ msgid ""
 "The easiest way to install the whole Clip is getting all-in-one package\n"
 "clip-prg-&lt;version&gt;.tgz unpack it and compile."
 msgstr ""
-"Самый простой вариант установить весь Clip это забрать clip-prg-&lt;"
-"version&gt;.tgz пакет, распаковать его и скомпилировать."
+"Самый простой вариант установить весь Clip это забрать clip-prg-"
+"&lt;version&gt;.tgz пакет, распаковать его и скомпилировать."
 
 #: template/./doc/install.sgml:95
 msgid "To download and unpack:"
@@ -494,8 +495,8 @@ msgid ""
 "soft-linked in your $HOME/bin."
 msgstr ""
 "Можно не устанавливать переменную CLIPROOT. В этом случае CLIPROOT будет "
-"указывать на тот уровень, в котором находится каталог clip-prg-&lt;"
-"version&gt; (make local создаст каталог ../cliproot). Исполняемые файлы "
+"указывать на тот уровень, в котором находится каталог clip-prg-"
+"&lt;version&gt; (make local создаст каталог ../cliproot). Исполняемые файлы "
 "пакета clip_dev будут иметь ссылки в $HOME/bin."
 
 #: template/./doc/install.sgml:132
@@ -596,15 +597,15 @@ msgid ""
 "If you want to make system-wide installation start ./configure -r (that key\n"
 "means \"release\"; other keys you can get by ./configure -h)."
 msgstr ""
-"Если вы решили выполнить общесистемную установку, то выполните ./configure -"
-"r (этот ключ означает \"release\"; остальные ключи можно узнать по ./"
+"Если вы решили выполнить общесистемную установку, то выполните ./configure "
+"-r (этот ключ означает \"release\"; остальные ключи можно узнать по ./"
 "configure -h)."
 
 #: template/./doc/install.sgml:172
 msgid "After this run \"make\" and (with appropriate rights) \"make install\"."
 msgstr ""
-"После чего выполните \"make\" и (с соответствующими правами) \"make install"
-"\"."
+"После чего выполните \"make\" и (с соответствующими правами) \"make "
+"install\"."
 
 #: template/./doc/install.sgml:174
 #, fuzzy
@@ -719,11 +720,11 @@ msgstr ""
 
 #: template/./doc/install.sgml:208
 msgid ""
-"More information about working with Cygwin you can find in \"Beginner's guide"
-"\"."
+"More information about working with Cygwin you can find in \"Beginner's "
+"guide\"."
 msgstr ""
-"Больше информации о работе с Cygwin вы найдете в \"Руководстве для начинающих"
-"\"."
+"Больше информации о работе с Cygwin вы найдете в \"Руководстве для "
+"начинающих\"."
 
 #: template/./doc/install.sgml:213
 msgid "Clip Cygwin binaries"
