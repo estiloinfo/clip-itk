@@ -151,7 +151,7 @@ $PLATFORMS$
 $LANG_RU$
 	Не зависит от платформы.
 $SEEALSO$
-	UICHOICE UICOMBOBOX UITABLECOLUMN
+	UICHOICE, UICOMBOBOX, UITABLECOLUMN
 $AUTHOR$
 	Andrey Cherepanov <skull@eas.lrn.ru>
 $LANG_RU$

@@ -85,7 +85,7 @@ $PLATFORMS$
 $LANG_RU$
 	Не зависит от платформы.
 $SEEALSO$
-	UISOURCE UITABLE UIEDITTABLE UITREE
+	UISOURCE, UITABLE, UIEDITTABLE, UITREE
 $AUTHOR$
 	Andrey Cherepanov <skull@eas.lrn.ru>
 $LANG_RU$

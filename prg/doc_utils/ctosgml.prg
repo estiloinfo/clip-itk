@@ -260,7 +260,7 @@ local str, newstr, l, i, j, s, tag, reg
 							elseif tag == '</listitem>'
 								tag := '</para>' + tag
 							endif
-							newstr += tag
+							newstr += lower_linkend(tag)
 							str := substr(str, i+1)
 							loop
 						else
@@ -404,7 +404,7 @@ local i, j, a, str, lStr, arr, lf, val
 			for i=1 to ab_met:len()
 				a := ab_met:getKey(i)
 				j := ab_met:getData(i)
-				str := '<row><entry><link linkend="class-'+alltrim(fs:CLASSNAME)+'-'+a+'">'+a+'</link></entry>&\n'
+				str := '<row><entry><link linkend="class-'+lower(alltrim(fs:CLASSNAME))+'-'+lower(a)+'">'+a+'</link></entry>&\n'
 				val := trans(fs:METHODS[j]:SUMMARY)
 				if lang != "EN" .and. (lang $ fs) .and. !empty(fs[lang]:METHODS[j]:SUMMARY)
 					val := trans(fs[lang]:METHODS[j]:SUMMARY)
@@ -458,7 +458,7 @@ local i, j, a, str, lStr, arr, lf, val
 			i := strtran(i, "_", "")
 			i := strtran(i, "*", "")
 			i := alltrim(i)
-			str += '<link linkend="'+iif(lf,'function', 'class')+i+'">'+a[j]+'</link> '
+			str += '<link linkend="'+iif(lf,'function', 'class')+lower(i)+'">'+a[j]+'</link> '
 		next
 		str += '&\n</para>&\n</refsect1>'
 		fwrite(fsgml, str, len(str))
@@ -517,7 +517,7 @@ local i, j, key, val, str, a, x, ii, fs, fsl
 	for ii=1 to ab_met:len()
 		key := ab_met:getKey(ii)
 		x := ab_met:getData(ii)
-		str := '<refsect2>&\n<title><anchor id="class-'+clname+'-'+key+'"/>Method '+clname+':'+key+'()</title>&\n'
+		str := '<refsect2>&\n<title><anchor id="class-'+lower(clname)+'-'+lower(key)+'"/>Method '+clname+':'+key+'()</title>&\n'
 		fwrite(fsgml, str, len(str))
 
 		str := '<programlisting><![CDATA['+fs[x]:SYNTAX+']]></programlisting>&\n'
@@ -634,7 +634,7 @@ return
 static function addToOrder(fs, x, ab_order, fname)
 local i, a, s
 	fs[x]:CLASSNAME := strtran(upper(fs[x]:CLASSNAME), '*', '')
-	fs[x]:SGMLID := alltrim(strtran(fs[x]:CLASSNAME, "_", ""))
+	fs[x]:SGMLID := lower(alltrim(strtran(fs[x]:CLASSNAME, "_", "")))
 	if empty(fs[x]:CLASSNAME)
 		qout("!!! File "+fname+" have empty CLASSNAME")
 		adel(fs, x)
@@ -756,4 +756,16 @@ local arr, i, sp, ep, x, y
 		endif
 	next
 return arr
+
+*******************************************************************************
+static function lower_linkend(tag)
+local p1, p2
+	p1 := atl('linkend="', lower(tag))
+	if p1 > 0
+		p2 := at('"', substr(tag, p1+9))
+		if p2 > 0
+			tag := left(tag, p1+8) + lower(substr(tag, p1+9, p2-1)) + substr(tag, p1+8+p2)
+		endif
+	endif
+return tag
 

@@ -175,7 +175,7 @@ reading will increase presumably in 3-4 times.
 </section>
 
 
-<section id="CODBMETADATA"><title>_(
+<section id="codbmetadata"><title>_(
 Metadata classes)_</title>
 <para>_(Metadata it is objects what describe other object and so objects needdes
 to control of ODB kernel.
@@ -363,16 +363,16 @@ Controling classes.)_</title>
 There are three classes for creation and management of dictionaries and depositories:
 )_</para>
 <itemizedlist>
-<listitem><para>_(<link linkend="classCODBLIST">CODBLIST  </link> - handles the list of accessible dictionaries.)_</para></listitem>
-<listitem><para>_(<link linkend="classCODBDICTIONARY">CODBDICTIONARY</link> - handles the content of the dictionary.)_</para></listitem>
-<listitem><para>_(<link linkend="classCODBDEPOSITORY">CODBDEPOSITORY</link> - handles the content of depository.)_</para></listitem>
+<listitem><para>_(<link linkend="classcodblist">CODBLIST  </link> - handles the list of accessible dictionaries.)_</para></listitem>
+<listitem><para>_(<link linkend="classcodbdictionary">CODBDICTIONARY</link> - handles the content of the dictionary.)_</para></listitem>
+<listitem><para>_(<link linkend="classcodbdepository">CODBDEPOSITORY</link> - handles the content of depository.)_</para></listitem>
 </itemizedlist>
 
 <para>_(
 And one service class:
 )_</para>
 <itemizedlist>
-<listitem><para>_(<link linkend="classCODBIDLIST">CODBIDLIST</link> - a service class for a work with stored objects in navigating style.)_</para></listitem>
+<listitem><para>_(<link linkend="classcodbidlist">CODBIDLIST</link> - a service class for a work with stored objects in navigating style.)_</para></listitem>
 </itemizedlist>
 </section>
 

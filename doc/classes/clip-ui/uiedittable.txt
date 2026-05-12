@@ -30,11 +30,11 @@ $LANG_RU$
 	UIEditTable(<aColumns>)	--> Объект UIEditTable
 $ATTRIBUTES$
 	<className>	- Class name. Value should be "UIEditTable".
-	<columns>	- Array of <link linkend="classuiedittablecolumn">UIEditTableColumn</link> objects.
+	<columns>	- Array of UIEditTableColumn objects.
 	<onChanged> - Code block. Action that will be call after cell edit by user.
 $LANG_RU$
 	<className>	- Имя класса. Значение: "UIEditTable".
-	<columns>	- Массив объектов <link linkend="classuiedittablecolumn">UIEditTableColumn</link>.
+	<columns>	- Массив объектов UIEditTableColumn.
 	<onChanged> - Блок кода. Действие, вызываемое после редактирования ячейки пользователем.
 
 
@@ -47,9 +47,9 @@ $LANG_RU$
 $SYNTAX$
 	UIEditTable(<aColumns>)	--> UIEditTable object
 $ARGUMENTS$
-	<aColumns>	- Array of <link linkend="classuiedittablecolumn">UIEditTableColumn</link> objects.
+	<aColumns>	- Array of UIEditTableColumn objects.
 $LANG_RU$
-	<aColumns>	- Массив объектов <link linkend="classuiedittablecolumn">UIEditTableColumn</link>.
+	<aColumns>	- Массив объектов UIEditTableColumn.
 $EXAMPLES$
 	cols := array(0)
 	aadd( cols, UIEditTableColumn( 'num', 'N', TABLE_COLUMN_COUNTER ) )
@@ -371,7 +371,6 @@ $PLATFORMS$
 $LANG_RU$
 	Не зависит от платформы.
 $SEEALSO$
-	UIEDITTABLECOLUMN UITABLEEDIT 
 $AUTHOR$
 	Andrey Cherepanov <skull@eas.lrn.ru>
 $LANG_RU$

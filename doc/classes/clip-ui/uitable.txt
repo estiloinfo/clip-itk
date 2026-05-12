@@ -239,7 +239,7 @@ $PLATFORMS$
 $LANG_RU$
 	Не зависит от платформы.
 $SEEALSO$
-	UITABLECOLUMN UITABLEEDIT UITREE
+	UITABLECOLUMN, UITREE
 $AUTHOR$
 	Andrey Cherepanov <skull@eas.lrn.ru>
 $LANG_RU$

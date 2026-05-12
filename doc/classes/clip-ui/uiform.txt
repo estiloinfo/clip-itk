@@ -5,9 +5,9 @@ $SUMMARY$
 $LANG_RU$
 	Класс UIForm
 $ABOUT$
-	Class for manipulate form in XML format. It supported forms in <link linkend="classxflforms">XFL format</link>, Qt Designer and Glade forms.
+	Class for manipulate form in XML format. It supported forms in XFL format, Qt Designer and Glade forms.
 $LANG_RU$
-	Класс работы с формами в формате XML. Поддерживаются формы в <link linkend="classxflforms">формате XFL</link>, а также формы Qt Designer и Glade.
+	Класс работы с формами в формате XML. Поддерживаются формы в формате XFL, а также формы Qt Designer и Glade.
 $SYNTAX$
 	UIForm(<fileName>,<parent>,[<context>])	--> UIForm object
 $LANG_RU$

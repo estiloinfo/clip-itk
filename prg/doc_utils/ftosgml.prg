@@ -250,7 +250,7 @@ local str, newstr, l, i, j, s, tag, reg
 							elseif tag == '</listitem>'
 								tag := '</para>' + tag
 							endif
-							newstr += tag
+							newstr += lower_linkend(tag)
 							str := substr(str, i+1)
 							loop
 						else
@@ -390,7 +390,7 @@ local i, j, a, str, lStr, arr, lf
 			i := strtran(i, "_", "")
 			i := strtran(i, "*", "")
 			i := alltrim(i)
-			str += '<link linkend="'+iif(lf, 'function', 'class')+i+'">'+a[j]+'</link> '
+			str += '<link linkend="'+iif(lf, 'function', 'class')+lower(i)+'">'+a[j]+'</link> '
 		next
 		str += '</entry></row>&\n'
 	endif
@@ -649,7 +649,7 @@ return
 static function addToOrder(fs, x, ab_order, categ, fname)
 local i, a, s
 	fs[x]:FUNCNAME := strtran(upper(fs[x]:FUNCNAME), '*', '')
-	fs[x]:SGMLID := alltrim(strtran(strtran(strtran(fs[x]:FUNCNAME, "(", ""), ")", ""), "_", ""))
+	fs[x]:SGMLID := lower(alltrim(strtran(strtran(strtran(fs[x]:FUNCNAME, "(", ""), ")", ""), "_", "")))
 	fs[x]:SGMLID := strtran(strtran(fs[x]:SGMLID, "/", ""), " ", "")
 	if empty(fs[x]:FUNCNAME)
 		qout("!!! File "+fname+" have empty FUNCNAME")
@@ -910,3 +910,15 @@ static function split_str(str, delim)
 		endif
 	next
 return arr
+
+*******************************************************************************
+static function lower_linkend(tag)
+local p1, p2
+	p1 := atl('linkend="', lower(tag))
+	if p1 > 0
+		p2 := at('"', substr(tag, p1+9))
+		if p2 > 0
+			tag := left(tag, p1+8) + lower(substr(tag, p1+9, p2-1)) + substr(tag, p1+8+p2)
+		endif
+	endif
+return tag
