@@ -582,19 +582,19 @@ msgstr ""
 
 #: template/./doc/codb.sgml:365
 msgid ""
-"<link linkend=\"classCODBLIST\">CODBLIST  </link> - handles the list of "
+"<link linkend=\"classcodblist\">CODBLIST  </link> - handles the list of "
 "accessible dictionaries."
 msgstr ""
 
 #: template/./doc/codb.sgml:366
 msgid ""
-"<link linkend=\"classCODBDICTIONARY\">CODBDICTIONARY</link> - handles the "
+"<link linkend=\"classcodbdictionary\">CODBDICTIONARY</link> - handles the "
 "content of the dictionary."
 msgstr ""
 
 #: template/./doc/codb.sgml:367
 msgid ""
-"<link linkend=\"classCODBDEPOSITORY\">CODBDEPOSITORY</link> - handles the "
+"<link linkend=\"classcodbdepository\">CODBDEPOSITORY</link> - handles the "
 "content of depository."
 msgstr ""
 
@@ -606,7 +606,7 @@ msgstr ""
 
 #: template/./doc/codb.sgml:374
 msgid ""
-"<link linkend=\"classCODBIDLIST\">CODBIDLIST</link> - a service class for a "
+"<link linkend=\"classcodbidlist\">CODBIDLIST</link> - a service class for a "
 "work with stored objects in navigating style."
 msgstr ""
 
