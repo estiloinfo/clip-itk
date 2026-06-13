@@ -2173,6 +2173,41 @@ initKey(ScreenData * dp)
 
 /* termcap init ][ termcap capabilities  */
 
+/* PGCH_* (1..30) -> Unicode box-drawing codepoints, for UTF-8 output.
+   In UTF-8 mode pseudographic chars (< 32) must not be looked up in the
+   host charset uniTable (which maps them to raw control bytes like 0x01);
+   they map to the proper U+25xx/U+21xx drawing characters instead. */
+static const unsigned long pgch_uni[32] = {
+	0,
+	0x2500,	/*  1 PGCH_HLINE     ─ */
+	0x2514,	/*  2 PGCH_LLCORNER  └ */
+	0x2518,	/*  3 PGCH_LRCORNER  ┘ */
+	0x252C,	/*  4 PGCH_TTEE      ┬ */
+	0x2524,	/*  5 PGCH_RTEE      ┤ */
+	0x251C,	/*  6 PGCH_LTEE      ├ */
+	0x2534,	/*  7 PGCH_BTEE      ┴ */
+	0x250C,	/*  8 PGCH_ULCORNER  ┌ */
+	0, 0, 0, 0, 0,	/* 9..13 unused */
+	0x2510,	/* 14 PGCH_URCORNER  ┐ */
+	0x2502,	/* 15 PGCH_VLINE     │ */
+	0x2192,	/* 16 PGCH_RARROW    → */
+	0x2190,	/* 17 PGCH_LARROW    ← */
+	0x2550,	/* 18 PGCH_HLINE2    ═ */
+	0x255A,	/* 19 PGCH_LLCORNER2 ╚ */
+	0x255D,	/* 20 PGCH_LRCORNER2 ╝ */
+	0x2566,	/* 21 PGCH_TTEE2     ╦ */
+	0x2563,	/* 22 PGCH_RTEE2     ╣ */
+	0x2560,	/* 23 PGCH_LTEE2     ╠ */
+	0x2569,	/* 24 PGCH_BTEE2     ╩ */
+	0x2554,	/* 25 PGCH_ULCORNER2 ╔ */
+	0x2557,	/* 26 PGCH_URCORNER2 ╗ */
+	0x2551,	/* 27 PGCH_VLINE2    ║ */
+	0x253C,	/* 28 PGCH_PLUS      ┼ */
+	0x256C,	/* 29 PGCH_PLUS2     ╬ */
+	0x2588,	/* 30 PGCH_BLOCK     █ */
+	0,	/* 31 */
+};
+
 static void
 termcap_put_char(ScreenData * dp, int ch, int utf8term)
 {
@@ -2193,7 +2228,10 @@ termcap_put_char(ScreenData * dp, int ch, int utf8term)
 		{
 			char utfch[7];
 			int n;
-			n = u32toutf8( utfch, dp->uniTable[ch] );
+			unsigned long uc = (ch < 32 && pgch_uni[ch])
+					   ? pgch_uni[ch]	/* pseudographic -> box-drawing */
+					   : dp->uniTable[ch];	/* normal host-charset char */
+			n = u32toutf8( utfch, uc );
 			utfch[n] = 0;
 			termcap_put_raw_str(dp, utfch);
 		}
