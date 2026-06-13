@@ -1,0 +1,48 @@
+$FUNCNAME$
+	COM_CLOSE()
+$CATEGORY$
+  Serial I/O
+$SUMMARY$
+	Closes the port and releases its buffer.
+$LANG_RU$
+	Закрывает порт и освобождает буфер.
+$SYNTAX$
+	COM_CLOSE(<nHandle>) --> lClose
+$ARGUMENTS$
+	<nHandle> is the file handle obtained from COM_OPEN().
+$LANG_RU$
+	<номер обраб. файла> - это номер обрабатываемого файла, полученного с
+	помощью функции COM_OPEN().
+$RETURNS$
+	If the port is closed successfully, the function returns .T.;
+	otherwise it returns .F..
+$LANG_RU$
+	В случае успешного закрытия порта возвращает .T., иначе .F..
+$DESCRIPTION$
+	This function closes a serial interface port previously opened with
+	COM_OPEN() and releases the buffer associated with its handle. After
+	the port is closed the handle becomes invalid and must not be used in
+	further serial I/O calls.
+$LANG_RU$
+	Эта функция закрывает порт последовательного интерфейса, ранее
+	открытый функцией COM_OPEN(), и освобождает буфер, связанный с его
+	дескриптором. После закрытия дескриптор становится недействительным
+	и не должен использоваться в последующих операциях ввода-вывода.
+$EXAMPLES$
+	nHandle := COM_OPEN("/dev/ttyS0")
+
+	IF nHandle != -1
+	    // ... serial I/O ...
+	    COM_CLOSE(nHandle)
+	ENDIF
+$PECULIARITIES$
+$LANG_RU$
+$PLATFORMS$
+   No dependies of platform.
+$LANG_RU$
+   Не зависит от платформ
+$SEEALSO$
+	COM_OPEN(),COM_INIT(),COM_FLUSH(),COM_READ(),COM_SEND()
+$AUTHOR$
+ITK,Paul
+$END$
